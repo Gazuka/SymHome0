@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+    <p>Vous avez {{ aliments | length }} aliments :</p>
+    <ul>
+        {% for aliment in aliments %}
+            <li>
+                <a href="#"><strong>{{ aliment.nom }}</strong> ({{ aliment.typeAliment }})</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

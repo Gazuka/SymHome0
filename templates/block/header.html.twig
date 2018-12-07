@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">SymHOME !</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor03">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('cuisine') }}">Accueil</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="boitesLink" href="#">Boites</a>
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="boitesLink">
+                    <a href="{{ path('new_boite') }}" class="dropdown-item">Créer une boite</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{{ path('liste_boites') }}" class="dropdown-item">Mes boites</a>
+                    <a href="#" class="dropdown-item">Remplir une boite</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">Manger une boite</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="alimentLink" href="#">Aliments</a>
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alimentLink">
+                    <a href="{{ path('liste_typealiment') }}" class="dropdown-item">Types d'aliments</a>
+                    <a href="{{ path('new_typealiment') }}" class="dropdown-item">Nouveau type d'aliment</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{{ path('liste_aliment') }}" class="dropdown-item">Aliments</a>
+                    <a href="{{ path('new_aliment') }}" class="dropdown-item">Nouveau aliment</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{{ path('liste_stockage') }}" class="dropdown-item">Stockages</a>
+                    <a href="{{ path('new_stockage') }}" class="dropdown-item">Nouveau stockage</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{{ path('liste_produit') }}" class="dropdown-item">Produits</a>
+                    <a href="{{ path('new_produit') }}" class="dropdown-item">Nouveau produit</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{{ path('liste_produit') }}" class="dropdown-item">Produits</a>
+                    <a href="{{ path('new_recette') }}" class="dropdown-item">Nouvelle recette</a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+{% for label, messages in app.flashes %}
+    <div class="container">
+        <div class="alert alert-{{label}}">
+            {% for message in messages %}
+                <p>{{ message |raw }}</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}

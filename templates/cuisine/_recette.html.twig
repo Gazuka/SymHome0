@@ -1,0 +1,78 @@
+{% block  _recette_ingredients_widget %}
+    <p>Ici, vous pouvez ajouter vos propres ingrédients !</p>
+
+    {{ form_widget(form) }}
+
+    <input type="hidden" id="widgets-counter" value="0">
+
+    <div class="form-group">
+        <button type="button" id="add-ingredient" class="btn btn-primary">Ajouter un ingredient</button>
+    </div>
+
+{% endblock %}
+
+{% block _recette_ingredients_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _recette_ingredients_entry_widget %}
+    <div class="form-group" id="block_{{id}}">
+        <div class="row">
+            <div class="col-10">
+                <div class="row">
+                    <div class="col">
+                    {{form_widget(form.aliment) }}
+                    {{form_widget(form.quantite) }}
+                        <!-- form_widget(form.url) }}-->
+                    </div>    
+                    <div class="col">
+                        <!--  form_widget(form.caption) }}-->
+                    </div>  
+                </div>
+            </div>  
+            <div class="col-2">
+                <button type="button" data-action="delete" data-target="#block_{{id}}" class="btn btn-danger">X</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block  _recette_etapes_widget %}
+    <p>Ici, vous pouvez ajouter vos propres étapes !</p>
+
+    {{ form_widget(form) }}
+
+    <input type="hidden" id="widgets-counter2" value="0">
+
+    <div class="form-group">
+        <button type="button" id="add-etape" class="btn btn-primary">Ajouter une étape</button>
+    </div>
+
+{% endblock %}
+
+{% block _recette_etapes_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _recette_etapes_entry_widget %}
+    <div class="form-group" id="block_{{id}}">
+        <div class="row">
+            <div class="col-10">
+                <div class="row">
+                    <div class="col">
+                    {{form_widget(form.descriptif) }}
+                    {{form_widget(form.position) }}
+                        <!-- form_widget(form.url) }}-->
+                    </div>    
+                    <div class="col">
+                        <!--  form_widget(form.caption) }}-->
+                    </div>  
+                </div>
+            </div>  
+            <div class="col-2">
+                <button type="button" data-action="delete" data-target="#block_{{id}}" class="btn btn-danger">X</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

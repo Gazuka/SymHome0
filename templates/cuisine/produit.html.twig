@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+    <p>Vous avez {{ produits | length }} produits :</p>
+    <ul>
+        {% for produit in produits %}
+            <li>
+                <a href="#"><strong>{{ produit.quantite }} x {{ produit.aliment }} - {{ produit.nom }}</strong> ({{ produit.stockage }})</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

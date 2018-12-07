@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <p>Vous avez {{ stockages | length }} stockages :</p> 
+        {% for stockage in stockages %}
+            {% if stockage.parent is null %}
+                <div class="col">
+                    <strong>{{ stockage.nom }}</strong>
+                    {% include 'cuisine/_stockage.html.twig' %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+{% endblock %}

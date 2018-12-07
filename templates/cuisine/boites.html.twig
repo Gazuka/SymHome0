@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ titre }}
+{% endblock %}
+
+{% block body %}
+
+    <p>Vous avez {{ boites | length }} boites :</p>
+    <ul>
+        {% for boite in boites %}
+            <li>
+                <a href="{{ path('remplir_boite', {'id': boite.id}) }}"><strong>{{ boite.nom }}</strong> : {{ boite.contenu }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

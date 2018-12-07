@@ -1,0 +1,6 @@
+{% for stockage in stockage.stockages %}
+    <div class='col'>
+        <strong>{{ stockage.nom }}</strong> : {{ stockage.produits | length }} produits
+        {% include 'cuisine/_stockage.html.twig' %}
+    </div>
+{% endfor %}
