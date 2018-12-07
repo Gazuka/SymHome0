@@ -50,10 +50,10 @@ class srcDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
         throw new ResourceNotFoundException();
     }
 
-    private function doMatch(string $rawPathinfo, array &$allow = array(), array &$allowSchemes = array()): ?array
+    private function doMatch(string $rawPathinfo, array &$allow = array(), array &$allowSchemes = array()): array
     {
         $allow = $allowSchemes = array();
-        $pathinfo = rawurldecode($rawPathinfo);
+        $pathinfo = rawurldecode($rawPathinfo) ?: '/';
         $context = $this->context;
         $requestMethod = $canonicalMethod = $context->getMethod();
 
@@ -61,32 +61,41 @@ class srcDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
             $canonicalMethod = 'GET';
         }
 
-        switch ($pathinfo) {
+        switch ($trimmedPathinfo = '/' !== $pathinfo && '/' === $pathinfo[-1] ? substr($pathinfo, 0, -1) : $pathinfo) {
             default:
                 $routes = array(
-                    '/cuisine' => array(array('_route' => 'cuisine', '_controller' => 'App\\Controller\\CuisineController::index'), null, null, null),
-                    '/cuisine/boites' => array(array('_route' => 'liste_boites', '_controller' => 'App\\Controller\\CuisineController::listingBoites'), null, null, null),
-                    '/cuisine/boite/new' => array(array('_route' => 'new_boite', '_controller' => 'App\\Controller\\CuisineController::creerBoite'), null, null, null),
-                    '/cuisine/typealiment/new' => array(array('_route' => 'new_typealiment', '_controller' => 'App\\Controller\\CuisineController::creerTypeAliment'), null, null, null),
-                    '/cuisine/typealiment' => array(array('_route' => 'liste_typealiment', '_controller' => 'App\\Controller\\CuisineController::listingTypesAliment'), null, null, null),
-                    '/cuisine/aliment/new' => array(array('_route' => 'new_aliment', '_controller' => 'App\\Controller\\CuisineController::creerAliment'), null, null, null),
-                    '/cuisine/aliment' => array(array('_route' => 'liste_aliment', '_controller' => 'App\\Controller\\CuisineController::listingAliments'), null, null, null),
-                    '/cuisine/stockage/new' => array(array('_route' => 'new_stockage', '_controller' => 'App\\Controller\\CuisineController::creerStockage'), null, null, null),
-                    '/cuisine/stockage' => array(array('_route' => 'liste_stockage', '_controller' => 'App\\Controller\\CuisineController::listingStockage'), null, null, null),
-                    '/cuisine/produit/new' => array(array('_route' => 'new_produit', '_controller' => 'App\\Controller\\CuisineController::creerProduit'), null, null, null),
-                    '/cuisine/produit' => array(array('_route' => 'liste_produit', '_controller' => 'App\\Controller\\CuisineController::listingProduit'), null, null, null),
-                    '/cuisine/recette/new' => array(array('_route' => 'new_recette', '_controller' => 'App\\Controller\\CuisineController::creerRecette'), null, null, null),
-                    '/_profiler/' => array(array('_route' => '_profiler_home', '_controller' => 'web_profiler.controller.profiler::homeAction'), null, null, null),
-                    '/_profiler/search' => array(array('_route' => '_profiler_search', '_controller' => 'web_profiler.controller.profiler::searchAction'), null, null, null),
-                    '/_profiler/search_bar' => array(array('_route' => '_profiler_search_bar', '_controller' => 'web_profiler.controller.profiler::searchBarAction'), null, null, null),
-                    '/_profiler/phpinfo' => array(array('_route' => '_profiler_phpinfo', '_controller' => 'web_profiler.controller.profiler::phpinfoAction'), null, null, null),
-                    '/_profiler/open' => array(array('_route' => '_profiler_open_file', '_controller' => 'web_profiler.controller.profiler::openAction'), null, null, null),
+                    '/cuisine' => array(array('_route' => 'cuisine', '_controller' => 'App\\Controller\\CuisineController::index'), null, null, null, false),
+                    '/cuisine/boites' => array(array('_route' => 'liste_boites', '_controller' => 'App\\Controller\\CuisineController::listingBoites'), null, null, null, false),
+                    '/cuisine/boite/new' => array(array('_route' => 'new_boite', '_controller' => 'App\\Controller\\CuisineController::creerBoite'), null, null, null, false),
+                    '/cuisine/typealiment/new' => array(array('_route' => 'new_typealiment', '_controller' => 'App\\Controller\\CuisineController::creerTypeAliment'), null, null, null, false),
+                    '/cuisine/typealiment' => array(array('_route' => 'liste_typealiment', '_controller' => 'App\\Controller\\CuisineController::listingTypesAliment'), null, null, null, false),
+                    '/cuisine/aliment/new' => array(array('_route' => 'new_aliment', '_controller' => 'App\\Controller\\CuisineController::creerAliment'), null, null, null, false),
+                    '/cuisine/aliment' => array(array('_route' => 'liste_aliment', '_controller' => 'App\\Controller\\CuisineController::listingAliments'), null, null, null, false),
+                    '/cuisine/stockage/new' => array(array('_route' => 'new_stockage', '_controller' => 'App\\Controller\\CuisineController::creerStockage'), null, null, null, false),
+                    '/cuisine/stockage' => array(array('_route' => 'liste_stockage', '_controller' => 'App\\Controller\\CuisineController::listingStockage'), null, null, null, false),
+                    '/cuisine/produit/new' => array(array('_route' => 'new_produit', '_controller' => 'App\\Controller\\CuisineController::creerProduit'), null, null, null, false),
+                    '/cuisine/produit' => array(array('_route' => 'liste_produit', '_controller' => 'App\\Controller\\CuisineController::listingProduit'), null, null, null, false),
+                    '/cuisine/recette/new' => array(array('_route' => 'new_recette', '_controller' => 'App\\Controller\\CuisineController::creerRecette'), null, null, null, false),
+                    '/_profiler' => array(array('_route' => '_profiler_home', '_controller' => 'web_profiler.controller.profiler::homeAction'), null, null, null, true),
+                    '/_profiler/search' => array(array('_route' => '_profiler_search', '_controller' => 'web_profiler.controller.profiler::searchAction'), null, null, null, false),
+                    '/_profiler/search_bar' => array(array('_route' => '_profiler_search_bar', '_controller' => 'web_profiler.controller.profiler::searchBarAction'), null, null, null, false),
+                    '/_profiler/phpinfo' => array(array('_route' => '_profiler_phpinfo', '_controller' => 'web_profiler.controller.profiler::phpinfoAction'), null, null, null, false),
+                    '/_profiler/open' => array(array('_route' => '_profiler_open_file', '_controller' => 'web_profiler.controller.profiler::openAction'), null, null, null, false),
                 );
 
-                if (!isset($routes[$pathinfo])) {
+                if (!isset($routes[$trimmedPathinfo])) {
                     break;
                 }
-                list($ret, $requiredHost, $requiredMethods, $requiredSchemes) = $routes[$pathinfo];
+                list($ret, $requiredHost, $requiredMethods, $requiredSchemes, $hasTrailingSlash) = $routes[$trimmedPathinfo];
+
+                if ('/' !== $pathinfo) {
+                    if ($hasTrailingSlash !== ('/' === $pathinfo[-1])) {
+                        if ((!$requiredMethods || isset($requiredMethods['GET'])) && 'GET' === $canonicalMethod) {
+                            return $allow = $allowSchemes = array();
+                        }
+                        break;
+                    }
+                }
 
                 $hasRequiredScheme = !$requiredSchemes || isset($requiredSchemes[$context->getScheme()]);
                 if ($requiredMethods && !isset($requiredMethods[$canonicalMethod]) && !isset($requiredMethods[$requestMethod])) {
@@ -122,7 +131,7 @@ class srcDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
                             .'|(*:193)'
                         .')'
                     .')'
-                .')$}sD',
+                .')(?:/?)$}sD',
         );
 
         foreach ($regexList as $offset => $regex) {
@@ -130,17 +139,34 @@ class srcDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
                 switch ($m = (int) $matches['MARK']) {
                     default:
                         $routes = array(
-                            34 => array(array('_route' => 'remplir_boite', '_controller' => 'App\\Controller\\CuisineController::remplirBoite'), array('id'), null, null),
-                            72 => array(array('_route' => '_twig_error_test', '_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'), array('code', '_format'), null, null),
-                            91 => array(array('_route' => '_wdt', '_controller' => 'web_profiler.controller.profiler::toolbarAction'), array('token'), null, null),
-                            136 => array(array('_route' => '_profiler_search_results', '_controller' => 'web_profiler.controller.profiler::searchResultsAction'), array('token'), null, null),
-                            150 => array(array('_route' => '_profiler_router', '_controller' => 'web_profiler.controller.router::panelAction'), array('token'), null, null),
-                            170 => array(array('_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception::showAction'), array('token'), null, null),
-                            183 => array(array('_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception::cssAction'), array('token'), null, null),
-                            193 => array(array('_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'), array('token'), null, null),
+                            34 => array(array('_route' => 'remplir_boite', '_controller' => 'App\\Controller\\CuisineController::remplirBoite'), array('id'), null, null, false),
+                            72 => array(array('_route' => '_twig_error_test', '_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'), array('code', '_format'), null, null, false),
+                            91 => array(array('_route' => '_wdt', '_controller' => 'web_profiler.controller.profiler::toolbarAction'), array('token'), null, null, false),
+                            136 => array(array('_route' => '_profiler_search_results', '_controller' => 'web_profiler.controller.profiler::searchResultsAction'), array('token'), null, null, false),
+                            150 => array(array('_route' => '_profiler_router', '_controller' => 'web_profiler.controller.router::panelAction'), array('token'), null, null, false),
+                            170 => array(array('_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception::showAction'), array('token'), null, null, false),
+                            183 => array(array('_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception::cssAction'), array('token'), null, null, false),
+                            193 => array(array('_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'), array('token'), null, null, false),
                         );
 
-                        list($ret, $vars, $requiredMethods, $requiredSchemes) = $routes[$m];
+                        list($ret, $vars, $requiredMethods, $requiredSchemes, $hasTrailingSlash) = $routes[$m];
+
+                        if ('/' !== $pathinfo) {
+                            if ('/' === $pathinfo[-1]) {
+                                if (preg_match($regex, substr($pathinfo, 0, -1), $n) && $m === (int) $n['MARK']) {
+                                    $matches = $n;
+                                } else {
+                                    $hasTrailingSlash = true;
+                                }
+                            }
+
+                            if ($hasTrailingSlash !== ('/' === $pathinfo[-1])) {
+                                if ((!$requiredMethods || isset($requiredMethods['GET'])) && 'GET' === $canonicalMethod) {
+                                    return $allow = $allowSchemes = array();
+                                }
+                                break;
+                            }
+                        }
 
                         foreach ($vars as $i => $v) {
                             if (isset($matches[1 + $i])) {
@@ -174,6 +200,6 @@ class srcDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
             throw new Symfony\Component\Routing\Exception\NoConfigurationException();
         }
 
-        return null;
+        return array();
     }
 }
