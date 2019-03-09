@@ -22,6 +22,7 @@
       <parameter key="DebugBundle">Symfony\Bundle\DebugBundle\DebugBundle</parameter>
       <parameter key="MakerBundle">Symfony\Bundle\MakerBundle\MakerBundle</parameter>
       <parameter key="WebServerBundle">Symfony\Bundle\WebServerBundle\WebServerBundle</parameter>
+      <parameter key="DoctrineFixturesBundle">Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle</parameter>
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
       <parameter key="FrameworkBundle" type="collection">
@@ -75,6 +76,10 @@
       <parameter key="WebServerBundle" type="collection">
         <parameter key="path">C:\code\www\SymHome\vendor\symfony\web-server-bundle</parameter>
         <parameter key="namespace">Symfony\Bundle\WebServerBundle</parameter>
+      </parameter>
+      <parameter key="DoctrineFixturesBundle" type="collection">
+        <parameter key="path">C:\code\www\SymHome\vendor\doctrine\doctrine-fixtures-bundle</parameter>
+        <parameter key="namespace">Doctrine\Bundle\FixturesBundle</parameter>
       </parameter>
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
@@ -383,6 +388,19 @@
       <call method="setContainer">
         <argument type="service" id=".service_locator.ychIlgF.App\Controller\CuisineController"/>
       </call>
+    </service>
+    <service id="App\Controller\HomeController" class="App\Controller\HomeController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.ychIlgF.App\Controller\HomeController"/>
+      </call>
+    </service>
+    <service id="App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" public="false" autowire="true" autoconfigure="true">
+      <tag name="doctrine.fixture.orm"/>
+    </service>
+    <service id="App\DataFixtures\CuisineFixtures" class="App\DataFixtures\CuisineFixtures" public="false" autowire="true" autoconfigure="true">
+      <tag name="doctrine.fixture.orm"/>
     </service>
     <service id="App\Form\AlimentType" class="App\Form\AlimentType" public="false" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
@@ -1956,14 +1974,6 @@
       </call>
       <call method="addListener">
         <argument>kernel.request</argument>
-        <argument type="collection">
-          <argument type="service" id="debug.debug_handlers_listener"/>
-          <argument>configure</argument>
-        </argument>
-        <argument>2048</argument>
-      </call>
-      <call method="addListener">
-        <argument>console.command</argument>
         <argument type="collection">
           <argument type="service" id="debug.debug_handlers_listener"/>
           <argument>configure</argument>
@@ -4137,6 +4147,9 @@
     </service>
     <service id="maker.user_class_builder" class="Symfony\Bundle\MakerBundle\Security\UserClassBuilder" public="false"/>
     <service id="maker.security_config_updater" class="Symfony\Bundle\MakerBundle\Security\SecurityConfigUpdater" public="false"/>
+    <service id="maker.renderer.form_type_renderer" class="Symfony\Bundle\MakerBundle\Renderer\FormTypeRenderer" public="false">
+      <argument type="service" id="maker.generator"/>
+    </service>
     <service id="maker.maker.make_authenticator" class="Symfony\Bundle\MakerBundle\Maker\MakeAuthenticator" public="false">
       <tag name="maker.command"/>
       <argument type="service" id="maker.file_manager"/>
@@ -4154,6 +4167,7 @@
     <service id="maker.maker.make_crud" class="Symfony\Bundle\MakerBundle\Maker\MakeCrud" public="false">
       <tag name="maker.command"/>
       <argument type="service" id="maker.doctrine_helper"/>
+      <argument type="service" id="maker.renderer.form_type_renderer"/>
     </service>
     <service id="maker.maker.make_entity" class="Symfony\Bundle\MakerBundle\Maker\MakeEntity" public="false">
       <tag name="maker.command"/>
@@ -4168,11 +4182,21 @@
     <service id="maker.maker.make_form" class="Symfony\Bundle\MakerBundle\Maker\MakeForm" public="false">
       <tag name="maker.command"/>
       <argument type="service" id="maker.doctrine_helper"/>
+      <argument type="service" id="maker.renderer.form_type_renderer"/>
     </service>
     <service id="maker.maker.make_functional_test" class="Symfony\Bundle\MakerBundle\Maker\MakeFunctionalTest" public="false">
       <tag name="maker.command"/>
     </service>
+    <service id="maker.maker.make_registration_form" class="Symfony\Bundle\MakerBundle\Maker\MakeRegistrationForm" public="false">
+      <tag name="maker.command"/>
+      <argument type="service" id="maker.file_manager"/>
+      <argument type="service" id="maker.renderer.form_type_renderer"/>
+      <argument type="service" id="router.default"/>
+    </service>
     <service id="maker.maker.make_serializer_encoder" class="Symfony\Bundle\MakerBundle\Maker\MakeSerializerEncoder" public="false">
+      <tag name="maker.command"/>
+    </service>
+    <service id="maker.maker.make_serializer_normalizer" class="Symfony\Bundle\MakerBundle\Maker\MakeSerializerNormalizer" public="false">
       <tag name="maker.command"/>
     </service>
     <service id="maker.maker.make_subscriber" class="Symfony\Bundle\MakerBundle\Maker\MakeSubscriber" public="false">
@@ -4235,9 +4259,38 @@
         <argument>server:log</argument>
       </call>
     </service>
+    <service id="doctrine.fixtures_load_command" class="Doctrine\Bundle\FixturesBundle\Command\LoadDataFixturesDoctrineCommand">
+      <tag name="console.command" command="doctrine:fixtures:load"/>
+      <argument type="service" id="doctrine.fixtures.loader"/>
+      <call method="setName">
+        <argument>doctrine:fixtures:load</argument>
+      </call>
+    </service>
+    <service id="doctrine.fixtures.loader" class="Doctrine\Bundle\FixturesBundle\Loader\SymfonyFixturesLoader" public="false">
+      <argument type="service" id="service_container"/>
+      <call method="addFixtures">
+        <argument type="collection">
+          <argument type="collection">
+            <argument key="fixture" type="service" id="App\DataFixtures\AppFixtures"/>
+            <argument key="groups" type="collection"/>
+          </argument>
+          <argument type="collection">
+            <argument key="fixture" type="service" id="App\DataFixtures\CuisineFixtures"/>
+            <argument key="groups" type="collection"/>
+          </argument>
+        </argument>
+      </call>
+    </service>
     <service id=".instanceof.Symfony\Component\DependencyInjection\ServiceSubscriberInterface.0.App\Controller\CuisineController" class="App\Controller\CuisineController" public="false" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\CuisineController" class="App\Controller\CuisineController" public="false" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\CuisineController" class="App\Controller\CuisineController" public="false" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\DependencyInjection\ServiceSubscriberInterface.0.App\Controller\HomeController" class="App\Controller\HomeController" public="false" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\HomeController" class="App\Controller\HomeController" public="false" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\HomeController" class="App\Controller\HomeController" public="false" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" public="false" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" public="false" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\CuisineFixtures" class="App\DataFixtures\CuisineFixtures" public="false" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\DataFixtures\CuisineFixtures" class="App\DataFixtures\CuisineFixtures" public="false" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\AlimentType" class="App\Form\AlimentType" public="false" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\AlimentType" class="App\Form\AlimentType" public="false" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\BoiteType" class="App\Form\BoiteType" public="false" autowire="true" abstract="true"/>
@@ -4344,6 +4397,15 @@
         <argument>make:functional-test</argument>
       </call>
     </service>
+    <service id="maker.auto_command.make_registration_form" class="Symfony\Bundle\MakerBundle\Command\MakerCommand" public="false">
+      <tag name="console.command" command="make:registration-form"/>
+      <argument type="service" id="maker.maker.make_registration_form"/>
+      <argument type="service" id="maker.file_manager"/>
+      <argument type="service" id="maker.generator"/>
+      <call method="setName">
+        <argument>make:registration-form</argument>
+      </call>
+    </service>
     <service id="maker.auto_command.make_serializer_encoder" class="Symfony\Bundle\MakerBundle\Command\MakerCommand" public="false">
       <tag name="console.command" command="make:serializer:encoder"/>
       <argument type="service" id="maker.maker.make_serializer_encoder"/>
@@ -4351,6 +4413,15 @@
       <argument type="service" id="maker.generator"/>
       <call method="setName">
         <argument>make:serializer:encoder</argument>
+      </call>
+    </service>
+    <service id="maker.auto_command.make_serializer_normalizer" class="Symfony\Bundle\MakerBundle\Command\MakerCommand" public="false">
+      <tag name="console.command" command="make:serializer:normalizer"/>
+      <argument type="service" id="maker.maker.make_serializer_normalizer"/>
+      <argument type="service" id="maker.file_manager"/>
+      <argument type="service" id="maker.generator"/>
+      <call method="setName">
+        <argument>make:serializer:normalizer</argument>
       </call>
     </service>
     <service id="maker.auto_command.make_subscriber" class="Symfony\Bundle\MakerBundle\Command\MakerCommand" public="false">
@@ -4766,6 +4837,11 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.ychIlgF" method="withContext"/>
     </service>
+    <service id=".service_locator.ychIlgF.App\Controller\HomeController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <argument>App\Controller\HomeController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.ychIlgF" method="withContext"/>
+    </service>
     <service id=".service_locator.3nNxzEJ" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -4829,7 +4905,7 @@
       </argument>
     </service>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
-      <argument type="service" id=".service_locator.ZAlrwBS"/>
+      <argument type="service" id=".service_locator.p7t7kFy"/>
       <argument type="collection">
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
@@ -4882,6 +4958,7 @@
         <argument key="server:stop">web_server.command.server_stop</argument>
         <argument key="server:status">web_server.command.server_status</argument>
         <argument key="server:log">web_server.command.server_log</argument>
+        <argument key="doctrine:fixtures:load">doctrine.fixtures_load_command</argument>
         <argument key="make:auth">maker.auto_command.make_auth</argument>
         <argument key="make:command">maker.auto_command.make_command</argument>
         <argument key="make:controller">maker.auto_command.make_controller</argument>
@@ -4890,7 +4967,9 @@
         <argument key="make:fixtures">maker.auto_command.make_fixtures</argument>
         <argument key="make:form">maker.auto_command.make_form</argument>
         <argument key="make:functional-test">maker.auto_command.make_functional_test</argument>
+        <argument key="make:registration-form">maker.auto_command.make_registration_form</argument>
         <argument key="make:serializer:encoder">maker.auto_command.make_serializer_encoder</argument>
+        <argument key="make:serializer:normalizer">maker.auto_command.make_serializer_normalizer</argument>
         <argument key="make:subscriber">maker.auto_command.make_subscriber</argument>
         <argument key="make:twig-extension">maker.auto_command.make_twig_extension</argument>
         <argument key="make:unit-test">maker.auto_command.make_unit_test</argument>
@@ -4900,7 +4979,7 @@
         <argument key="make:migration">maker.auto_command.make_migration</argument>
       </argument>
     </service>
-    <service id=".service_locator.ZAlrwBS" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.p7t7kFy" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="console.command.about" type="service" id="console.command.about"/>
@@ -4932,6 +5011,7 @@
         <argument key="doctrine.database_drop_command" type="service" id="doctrine.database_drop_command"/>
         <argument key="doctrine.database_import_command" type="service" id="doctrine.database_import_command"/>
         <argument key="doctrine.ensure_production_settings_command" type="service" id="doctrine.ensure_production_settings_command"/>
+        <argument key="doctrine.fixtures_load_command" type="service" id="doctrine.fixtures_load_command"/>
         <argument key="doctrine.generate_entities_command" type="service" id="doctrine.generate_entities_command"/>
         <argument key="doctrine.mapping_convert_command" type="service" id="doctrine.mapping_convert_command"/>
         <argument key="doctrine.mapping_import_command" type="service" id="doctrine.mapping_import_command"/>
@@ -4951,7 +5031,9 @@
         <argument key="maker.auto_command.make_form" type="service" id="maker.auto_command.make_form"/>
         <argument key="maker.auto_command.make_functional_test" type="service" id="maker.auto_command.make_functional_test"/>
         <argument key="maker.auto_command.make_migration" type="service" id="maker.auto_command.make_migration"/>
+        <argument key="maker.auto_command.make_registration_form" type="service" id="maker.auto_command.make_registration_form"/>
         <argument key="maker.auto_command.make_serializer_encoder" type="service" id="maker.auto_command.make_serializer_encoder"/>
+        <argument key="maker.auto_command.make_serializer_normalizer" type="service" id="maker.auto_command.make_serializer_normalizer"/>
         <argument key="maker.auto_command.make_subscriber" type="service" id="maker.auto_command.make_subscriber"/>
         <argument key="maker.auto_command.make_twig_extension" type="service" id="maker.auto_command.make_twig_extension"/>
         <argument key="maker.auto_command.make_unit_test" type="service" id="maker.auto_command.make_unit_test"/>

@@ -33,6 +33,7 @@ class srcDevDebugProjectContainerUrlGenerator extends Symfony\Component\Routing\
         'new_produit' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::creerProduit'), array(), array(array('text', '/cuisine/produit/new')), array(), array()),
         'liste_produit' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::listingProduit'), array(), array(array('text', '/cuisine/produit')), array(), array()),
         'new_recette' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::creerRecette'), array(), array(array('text', '/cuisine/recette/new')), array(), array()),
+        'home' => array(array(), array('_controller' => 'App\\Controller\\HomeController::index'), array(), array(array('text', '/home')), array(), array()),
         '_twig_error_test' => array(array('code', '_format'), array('_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'), array('code' => '\\d+'), array(array('variable', '.', '[^/]++', '_format'), array('variable', '/', '\\d+', 'code'), array('text', '/_error')), array(), array()),
         '_wdt' => array(array('token'), array('_controller' => 'web_profiler.controller.profiler::toolbarAction'), array(), array(array('variable', '/', '[^/]++', 'token'), array('text', '/_wdt')), array(), array()),
         '_profiler_home' => array(array(), array('_controller' => 'web_profiler.controller.profiler::homeAction'), array(), array(array('text', '/_profiler/')), array(), array()),
