@@ -13,7 +13,7 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        $speech = "coucou Jerome";
+        $speech = "coucou Jerome, ton test fonctionne.";
         //Répondre au Google Home
 	    $response = new \stdClass();
 	    $response->fullfilment = $speech;
