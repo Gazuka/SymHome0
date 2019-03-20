@@ -19,38 +19,38 @@ class srcDevDebugProjectContainerUrlGenerator extends Symfony\Component\Routing\
         $this->logger = $logger;
         $this->defaultLocale = $defaultLocale;
         if (null === self::$declaredRoutes) {
-            self::$declaredRoutes = array(
-        'cuisine' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::index'), array(), array(array('text', '/cuisine')), array(), array()),
-        'liste_boites' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::listingBoites'), array(), array(array('text', '/cuisine/boites')), array(), array()),
-        'new_boite' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::creerBoite'), array(), array(array('text', '/cuisine/boite/new')), array(), array()),
-        'remplir_boite' => array(array('id'), array('_controller' => 'App\\Controller\\CuisineController::remplirBoite'), array(), array(array('variable', '/', '[^/]++', 'id'), array('text', '/cuisine/boite/add')), array(), array()),
-        'new_typealiment' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::creerTypeAliment'), array(), array(array('text', '/cuisine/typealiment/new')), array(), array()),
-        'liste_typealiment' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::listingTypesAliment'), array(), array(array('text', '/cuisine/typealiment')), array(), array()),
-        'new_aliment' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::creerAliment'), array(), array(array('text', '/cuisine/aliment/new')), array(), array()),
-        'liste_aliment' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::listingAliments'), array(), array(array('text', '/cuisine/aliment')), array(), array()),
-        'new_stockage' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::creerStockage'), array(), array(array('text', '/cuisine/stockage/new')), array(), array()),
-        'liste_stockage' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::listingStockage'), array(), array(array('text', '/cuisine/stockage')), array(), array()),
-        'new_produit' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::creerProduit'), array(), array(array('text', '/cuisine/produit/new')), array(), array()),
-        'liste_produit' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::listingProduit'), array(), array(array('text', '/cuisine/produit')), array(), array()),
-        'new_recette' => array(array(), array('_controller' => 'App\\Controller\\CuisineController::creerRecette'), array(), array(array('text', '/cuisine/recette/new')), array(), array()),
-        'home' => array(array(), array('_controller' => 'App\\Controller\\HomeController::index'), array(), array(array('text', '/home')), array(), array()),
-        '_twig_error_test' => array(array('code', '_format'), array('_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'), array('code' => '\\d+'), array(array('variable', '.', '[^/]++', '_format'), array('variable', '/', '\\d+', 'code'), array('text', '/_error')), array(), array()),
-        '_wdt' => array(array('token'), array('_controller' => 'web_profiler.controller.profiler::toolbarAction'), array(), array(array('variable', '/', '[^/]++', 'token'), array('text', '/_wdt')), array(), array()),
-        '_profiler_home' => array(array(), array('_controller' => 'web_profiler.controller.profiler::homeAction'), array(), array(array('text', '/_profiler/')), array(), array()),
-        '_profiler_search' => array(array(), array('_controller' => 'web_profiler.controller.profiler::searchAction'), array(), array(array('text', '/_profiler/search')), array(), array()),
-        '_profiler_search_bar' => array(array(), array('_controller' => 'web_profiler.controller.profiler::searchBarAction'), array(), array(array('text', '/_profiler/search_bar')), array(), array()),
-        '_profiler_phpinfo' => array(array(), array('_controller' => 'web_profiler.controller.profiler::phpinfoAction'), array(), array(array('text', '/_profiler/phpinfo')), array(), array()),
-        '_profiler_search_results' => array(array('token'), array('_controller' => 'web_profiler.controller.profiler::searchResultsAction'), array(), array(array('text', '/search/results'), array('variable', '/', '[^/]++', 'token'), array('text', '/_profiler')), array(), array()),
-        '_profiler_open_file' => array(array(), array('_controller' => 'web_profiler.controller.profiler::openAction'), array(), array(array('text', '/_profiler/open')), array(), array()),
-        '_profiler' => array(array('token'), array('_controller' => 'web_profiler.controller.profiler::panelAction'), array(), array(array('variable', '/', '[^/]++', 'token'), array('text', '/_profiler')), array(), array()),
-        '_profiler_router' => array(array('token'), array('_controller' => 'web_profiler.controller.router::panelAction'), array(), array(array('text', '/router'), array('variable', '/', '[^/]++', 'token'), array('text', '/_profiler')), array(), array()),
-        '_profiler_exception' => array(array('token'), array('_controller' => 'web_profiler.controller.exception::showAction'), array(), array(array('text', '/exception'), array('variable', '/', '[^/]++', 'token'), array('text', '/_profiler')), array(), array()),
-        '_profiler_exception_css' => array(array('token'), array('_controller' => 'web_profiler.controller.exception::cssAction'), array(), array(array('text', '/exception.css'), array('variable', '/', '[^/]++', 'token'), array('text', '/_profiler')), array(), array()),
-    );
+            self::$declaredRoutes = [
+        'cuisine' => [[], ['_controller' => 'App\\Controller\\CuisineController::index'], [], [['text', '/cuisine']], [], []],
+        'liste_boites' => [[], ['_controller' => 'App\\Controller\\CuisineController::listingBoites'], [], [['text', '/cuisine/boites']], [], []],
+        'new_boite' => [[], ['_controller' => 'App\\Controller\\CuisineController::creerBoite'], [], [['text', '/cuisine/boite/new']], [], []],
+        'remplir_boite' => [['id'], ['_controller' => 'App\\Controller\\CuisineController::remplirBoite'], [], [['variable', '/', '[^/]++', 'id'], ['text', '/cuisine/boite/add']], [], []],
+        'new_typealiment' => [[], ['_controller' => 'App\\Controller\\CuisineController::creerTypeAliment'], [], [['text', '/cuisine/typealiment/new']], [], []],
+        'liste_typealiment' => [[], ['_controller' => 'App\\Controller\\CuisineController::listingTypesAliment'], [], [['text', '/cuisine/typealiment']], [], []],
+        'new_aliment' => [[], ['_controller' => 'App\\Controller\\CuisineController::creerAliment'], [], [['text', '/cuisine/aliment/new']], [], []],
+        'liste_aliment' => [[], ['_controller' => 'App\\Controller\\CuisineController::listingAliments'], [], [['text', '/cuisine/aliment']], [], []],
+        'new_stockage' => [[], ['_controller' => 'App\\Controller\\CuisineController::creerStockage'], [], [['text', '/cuisine/stockage/new']], [], []],
+        'liste_stockage' => [[], ['_controller' => 'App\\Controller\\CuisineController::listingStockage'], [], [['text', '/cuisine/stockage']], [], []],
+        'new_produit' => [[], ['_controller' => 'App\\Controller\\CuisineController::creerProduit'], [], [['text', '/cuisine/produit/new']], [], []],
+        'liste_produit' => [[], ['_controller' => 'App\\Controller\\CuisineController::listingProduit'], [], [['text', '/cuisine/produit']], [], []],
+        'new_recette' => [[], ['_controller' => 'App\\Controller\\CuisineController::creerRecette'], [], [['text', '/cuisine/recette/new']], [], []],
+        'home' => [[], ['_controller' => 'App\\Controller\\HomeController::index'], [], [['text', '/home']], [], []],
+        '_twig_error_test' => [['code', '_format'], ['_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format'], ['variable', '/', '\\d+', 'code'], ['text', '/_error']], [], []],
+        '_wdt' => [['token'], ['_controller' => 'web_profiler.controller.profiler::toolbarAction'], [], [['variable', '/', '[^/]++', 'token'], ['text', '/_wdt']], [], []],
+        '_profiler_home' => [[], ['_controller' => 'web_profiler.controller.profiler::homeAction'], [], [['text', '/_profiler/']], [], []],
+        '_profiler_search' => [[], ['_controller' => 'web_profiler.controller.profiler::searchAction'], [], [['text', '/_profiler/search']], [], []],
+        '_profiler_search_bar' => [[], ['_controller' => 'web_profiler.controller.profiler::searchBarAction'], [], [['text', '/_profiler/search_bar']], [], []],
+        '_profiler_phpinfo' => [[], ['_controller' => 'web_profiler.controller.profiler::phpinfoAction'], [], [['text', '/_profiler/phpinfo']], [], []],
+        '_profiler_search_results' => [['token'], ['_controller' => 'web_profiler.controller.profiler::searchResultsAction'], [], [['text', '/search/results'], ['variable', '/', '[^/]++', 'token'], ['text', '/_profiler']], [], []],
+        '_profiler_open_file' => [[], ['_controller' => 'web_profiler.controller.profiler::openAction'], [], [['text', '/_profiler/open']], [], []],
+        '_profiler' => [['token'], ['_controller' => 'web_profiler.controller.profiler::panelAction'], [], [['variable', '/', '[^/]++', 'token'], ['text', '/_profiler']], [], []],
+        '_profiler_router' => [['token'], ['_controller' => 'web_profiler.controller.router::panelAction'], [], [['text', '/router'], ['variable', '/', '[^/]++', 'token'], ['text', '/_profiler']], [], []],
+        '_profiler_exception' => [['token'], ['_controller' => 'web_profiler.controller.exception::showAction'], [], [['text', '/exception'], ['variable', '/', '[^/]++', 'token'], ['text', '/_profiler']], [], []],
+        '_profiler_exception_css' => [['token'], ['_controller' => 'web_profiler.controller.exception::cssAction'], [], [['text', '/exception.css'], ['variable', '/', '[^/]++', 'token'], ['text', '/_profiler']], [], []],
+    ];
         }
     }
 
-    public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
+    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
         $locale = $parameters['_locale']
             ?? $this->context->getParameter('_locale')

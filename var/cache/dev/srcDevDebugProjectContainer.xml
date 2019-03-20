@@ -239,6 +239,10 @@
     <parameter key="doctrine_migrations.dir_name">C:\code\www\SymHome/src/Migrations</parameter>
     <parameter key="doctrine_migrations.namespace">DoctrineMigrations</parameter>
     <parameter key="doctrine_migrations.table_name">migration_versions</parameter>
+    <parameter key="doctrine_migrations.column_name">version</parameter>
+    <parameter key="doctrine_migrations.column_length">14</parameter>
+    <parameter key="doctrine_migrations.executed_at_column_name">executed_at</parameter>
+    <parameter key="doctrine_migrations.all_or_nothing">false</parameter>
     <parameter key="doctrine_migrations.name">Application Migrations</parameter>
     <parameter key="doctrine_migrations.custom_template">null</parameter>
     <parameter key="doctrine_migrations.organize_migrations">false</parameter>
@@ -369,11 +373,14 @@
       <parameter>console.command.public_alias.doctrine_cache.flush_command</parameter>
       <parameter>console.command.public_alias.doctrine_cache.stats_command</parameter>
       <parameter>console.command.public_alias.doctrine_migrations.diff_command</parameter>
+      <parameter>console.command.public_alias.doctrine_migrations.dump_schema_command</parameter>
       <parameter>console.command.public_alias.doctrine_migrations.execute_command</parameter>
       <parameter>console.command.public_alias.doctrine_migrations.generate_command</parameter>
       <parameter>console.command.public_alias.doctrine_migrations.latest_command</parameter>
       <parameter>console.command.public_alias.doctrine_migrations.migrate_command</parameter>
+      <parameter>console.command.public_alias.doctrine_migrations.rollup_command</parameter>
       <parameter>console.command.public_alias.doctrine_migrations.status_command</parameter>
+      <parameter>console.command.public_alias.doctrine_migrations.up_to_date_command</parameter>
       <parameter>console.command.public_alias.doctrine_migrations.version_command</parameter>
     </parameter>
   </parameters>
@@ -1380,6 +1387,7 @@
           </argument>
           <argument key="vi" type="collection">
             <argument>C:\code\www\SymHome\vendor\symfony\validator/Resources/translations\validators.vi.xlf</argument>
+            <argument>C:\code\www\SymHome\vendor\symfony\form/Resources/translations\validators.vi.xlf</argument>
             <argument>C:\code\www\SymHome\vendor\symfony\security\Core/Resources/translations\security.vi.xlf</argument>
           </argument>
           <argument key="zh_CN" type="collection">
@@ -1974,6 +1982,14 @@
       </call>
       <call method="addListener">
         <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service" id="debug.debug_handlers_listener"/>
+          <argument>configure</argument>
+        </argument>
+        <argument>2048</argument>
+      </call>
+      <call method="addListener">
+        <argument>console.command</argument>
         <argument type="collection">
           <argument type="service" id="debug.debug_handlers_listener"/>
           <argument>configure</argument>
@@ -2952,6 +2968,9 @@
     <service id="doctrine_migrations.diff_command" class="Doctrine\Bundle\MigrationsBundle\Command\MigrationsDiffDoctrineCommand">
       <tag name="console.command"/>
     </service>
+    <service id="doctrine_migrations.dump_schema_command" class="Doctrine\Bundle\MigrationsBundle\Command\MigrationsDumpSchemaDoctrineCommand">
+      <tag name="console.command"/>
+    </service>
     <service id="doctrine_migrations.execute_command" class="Doctrine\Bundle\MigrationsBundle\Command\MigrationsExecuteDoctrineCommand">
       <tag name="console.command"/>
     </service>
@@ -2964,7 +2983,13 @@
     <service id="doctrine_migrations.migrate_command" class="Doctrine\Bundle\MigrationsBundle\Command\MigrationsMigrateDoctrineCommand">
       <tag name="console.command"/>
     </service>
+    <service id="doctrine_migrations.rollup_command" class="Doctrine\Bundle\MigrationsBundle\Command\MigrationsRollupDoctrineCommand">
+      <tag name="console.command"/>
+    </service>
     <service id="doctrine_migrations.status_command" class="Doctrine\Bundle\MigrationsBundle\Command\MigrationsStatusDoctrineCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="doctrine_migrations.up_to_date_command" class="Doctrine\Bundle\MigrationsBundle\Command\MigrationsUpToDateDoctrineCommand">
       <tag name="console.command"/>
     </service>
     <service id="doctrine_migrations.version_command" class="Doctrine\Bundle\MigrationsBundle\Command\MigrationsVersionDoctrineCommand">
@@ -4773,48 +4798,6 @@
       </call>
     </service>
     <service id="monolog.handler.null_internal" class="Monolog\Handler\NullHandler"/>
-    <service id="debug.validator.inner" class="Symfony\Component\Validator\Validator\ValidatorInterface" public="false">
-      <factory service="validator.builder" method="getValidator"/>
-    </service>
-    <service id="debug.event_dispatcher.inner" class="Symfony\Component\EventDispatcher\EventDispatcher" public="false"/>
-    <service id="debug.controller_resolver.inner" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver" public="false">
-      <argument type="service" id="service_container"/>
-      <argument type="service" id="controller_name_converter"/>
-      <argument type="service" id="monolog.logger.request" on-invalid="ignore"/>
-    </service>
-    <service id="debug.argument_resolver.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver" public="false">
-      <argument type="service" id="argument_metadata_factory"/>
-      <argument type="iterator">
-        <argument type="service" id="debug.argument_resolver.request_attribute"/>
-        <argument type="service" id="debug.argument_resolver.request"/>
-        <argument type="service" id="debug.argument_resolver.session"/>
-        <argument type="service" id="debug.security.user_value_resolver"/>
-        <argument type="service" id="debug.argument_resolver.service"/>
-        <argument type="service" id="debug.argument_resolver.default"/>
-        <argument type="service" id="debug.argument_resolver.variadic"/>
-      </argument>
-    </service>
-    <service id="debug.security.access.decision_manager.inner" class="Symfony\Component\Security\Core\Authorization\AccessDecisionManager" public="false">
-      <argument type="iterator">
-        <argument type="service" id="security.access.authenticated_voter"/>
-        <argument type="service" id="security.access.simple_role_voter"/>
-        <argument type="service" id="security.access.expression_voter"/>
-      </argument>
-      <argument>affirmative</argument>
-      <argument>false</argument>
-      <argument>true</argument>
-    </service>
-    <service id="debug.argument_resolver.request_attribute.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestAttributeValueResolver" public="false"/>
-    <service id="debug.argument_resolver.request.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolver" public="false"/>
-    <service id="debug.argument_resolver.session.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver" public="false"/>
-    <service id="debug.security.user_value_resolver.inner" class="Symfony\Component\Security\Http\Controller\UserValueResolver" public="false">
-      <argument type="service" id="security.token_storage"/>
-    </service>
-    <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.D21RoD_"/>
-    </service>
-    <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
-    <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id=".service_locator.ychIlgF" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -4891,6 +4874,48 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.UEpceA5" method="withContext"/>
     </service>
+    <service id="debug.validator.inner" class="Symfony\Component\Validator\Validator\ValidatorInterface" public="false">
+      <factory service="validator.builder" method="getValidator"/>
+    </service>
+    <service id="debug.event_dispatcher.inner" class="Symfony\Component\EventDispatcher\EventDispatcher" public="false"/>
+    <service id="debug.controller_resolver.inner" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver" public="false">
+      <argument type="service" id="service_container"/>
+      <argument type="service" id="controller_name_converter"/>
+      <argument type="service" id="monolog.logger.request" on-invalid="ignore"/>
+    </service>
+    <service id="debug.argument_resolver.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver" public="false">
+      <argument type="service" id="argument_metadata_factory"/>
+      <argument type="iterator">
+        <argument type="service" id="debug.argument_resolver.request_attribute"/>
+        <argument type="service" id="debug.argument_resolver.request"/>
+        <argument type="service" id="debug.argument_resolver.session"/>
+        <argument type="service" id="debug.security.user_value_resolver"/>
+        <argument type="service" id="debug.argument_resolver.service"/>
+        <argument type="service" id="debug.argument_resolver.default"/>
+        <argument type="service" id="debug.argument_resolver.variadic"/>
+      </argument>
+    </service>
+    <service id="debug.security.access.decision_manager.inner" class="Symfony\Component\Security\Core\Authorization\AccessDecisionManager" public="false">
+      <argument type="iterator">
+        <argument type="service" id="security.access.authenticated_voter"/>
+        <argument type="service" id="security.access.simple_role_voter"/>
+        <argument type="service" id="security.access.expression_voter"/>
+      </argument>
+      <argument>affirmative</argument>
+      <argument>false</argument>
+      <argument>true</argument>
+    </service>
+    <service id="debug.argument_resolver.request_attribute.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestAttributeValueResolver" public="false"/>
+    <service id="debug.argument_resolver.request.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolver" public="false"/>
+    <service id="debug.argument_resolver.session.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver" public="false"/>
+    <service id="debug.security.user_value_resolver.inner" class="Symfony\Component\Security\Http\Controller\UserValueResolver" public="false">
+      <argument type="service" id="security.token_storage"/>
+    </service>
+    <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
+      <argument type="service" id=".service_locator.D21RoD_"/>
+    </service>
+    <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
+    <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id=".errored..service_locator.gY3.SUg.App\Entity\Boite" class="App\Entity\Boite"/>
     <service id=".service_locator.HKoUR8q" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
@@ -5245,11 +5270,14 @@
     <service id="console.command.public_alias.doctrine_cache.flush_command" alias="doctrine_cache.flush_command" public="true"/>
     <service id="console.command.public_alias.doctrine_cache.stats_command" alias="doctrine_cache.stats_command" public="true"/>
     <service id="console.command.public_alias.doctrine_migrations.diff_command" alias="doctrine_migrations.diff_command" public="true"/>
+    <service id="console.command.public_alias.doctrine_migrations.dump_schema_command" alias="doctrine_migrations.dump_schema_command" public="true"/>
     <service id="console.command.public_alias.doctrine_migrations.execute_command" alias="doctrine_migrations.execute_command" public="true"/>
     <service id="console.command.public_alias.doctrine_migrations.generate_command" alias="doctrine_migrations.generate_command" public="true"/>
     <service id="console.command.public_alias.doctrine_migrations.latest_command" alias="doctrine_migrations.latest_command" public="true"/>
     <service id="console.command.public_alias.doctrine_migrations.migrate_command" alias="doctrine_migrations.migrate_command" public="true"/>
+    <service id="console.command.public_alias.doctrine_migrations.rollup_command" alias="doctrine_migrations.rollup_command" public="true"/>
     <service id="console.command.public_alias.doctrine_migrations.status_command" alias="doctrine_migrations.status_command" public="true"/>
+    <service id="console.command.public_alias.doctrine_migrations.up_to_date_command" alias="doctrine_migrations.up_to_date_command" public="true"/>
     <service id="console.command.public_alias.doctrine_migrations.version_command" alias="doctrine_migrations.version_command" public="true"/>
   </services>
 </container>
