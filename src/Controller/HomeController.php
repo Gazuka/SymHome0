@@ -13,12 +13,12 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        $speech = "coucou Jérôme";
+        $speech = "coucou Jerome";
         //Répondre au Google Home
 	    $response = new \stdClass();
-	    $response->speech = $speech;
-	    $response->displayText = $speech;
-	    $response->source = "webhook";
+	    $response->fullfilment = $speech;
+	    //$response->displayText = $speech;
+	    //$response->source = "webhook";
         $home = json_encode($response);
         return new Response($home);
         //return $this->render('home/index.html.twig');
