@@ -16,7 +16,7 @@ class HomeController extends AbstractController
         $speech = "coucou jerome merci";
         //Répondre au Google Home
 	    $response = new \stdClass();
-	    $response->fullfilment = $speech;
+	    $response->fulfillment = $speech;
 	    //$response->displayText = $speech;
 	    //$response->source = "webhook";
         $home = json_encode($response);
