@@ -16,9 +16,9 @@ class HomeController extends AbstractController
         $speech = "coucou Jérôme merci";
         //Répondre au Google Home
 	    $response = new \stdClass();
-	    $response->speech = $speech;
-	    $response->displayText = $speech;
-	    $response->source = "webhook";
+	    $response->fullfilment = $speech;
+	    //$response->displayText = $speech;
+	    //$response->source = "webhook";
         $home = json_encode($response);
         return new Response($home);
         //return $this->render('home/index.html.twig');
