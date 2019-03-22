@@ -13,6 +13,15 @@ class HomeController extends AbstractController
      */
     public function index()
     {
+        $method = $_SERVER['REQUEST_METHOD'];
+        // Process only when method is POST
+        if($method == 'POST')
+        {
+	        //Récuperation du json
+	        $requestBody = file_get_contents('php://input');
+	        $json = json_decode($requestBody);
+        }
+
         $speech = "coucou jerome merci";
         //Répondre au Google Home
 	    $response = new \stdClass();
