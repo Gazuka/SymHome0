@@ -15,16 +15,18 @@ class HomeController extends AbstractController
     {
         $method = $_SERVER['REQUEST_METHOD'];
         // Process only when method is POST
+        $speech = "rien";
         if($method == 'POST')
         {
 	        //Récuperation du json
 	        $requestBody = file_get_contents('php://input');
             $json = json_decode($requestBody);
             //Récupération d'une variable dans le json
-	        $action = $json->queryResult->action;
+            $action = $json->queryResult->action;
+            
+            $speech = $action();
         }
-
-        $speech = $action();
+        
         //$speech = "coucou jerome merci".$action;
         //Répondre au Google Home
 	    $response = new \stdClass();
