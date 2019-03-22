@@ -39,7 +39,7 @@ class HomeController extends AbstractController
     }
 
     public function manger() {
-        $speech = "Je mange."
+        $speech = "Je mange.";
         return $speech;
     }
 }
