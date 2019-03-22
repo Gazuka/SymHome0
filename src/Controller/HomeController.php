@@ -19,10 +19,12 @@ class HomeController extends AbstractController
         {
 	        //Récuperation du json
 	        $requestBody = file_get_contents('php://input');
-	        $json = json_decode($requestBody);
+            $json = json_decode($requestBody);
+            //Récupération d'une variable dans le json
+	        $action = $json->queryResult->action;
         }
 
-        $speech = "coucou jerome merci";
+        $speech = "coucou jerome merci".$action;
         //Répondre au Google Home
 	    $response = new \stdClass();
 	    $response->fulfillmentText = $speech;
