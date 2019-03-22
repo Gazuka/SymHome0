@@ -25,7 +25,7 @@ class HomeController extends AbstractController
             //Récupération d'une variable dans le json
             $action = $json->queryResult->action;
             
-            $speech = $this->manger();
+            $speech = $this->$action();
         }
         
         //$speech = "coucou jerome merci".$action;
