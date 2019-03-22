@@ -16,6 +16,7 @@ class HomeController extends AbstractController
         $method = $_SERVER['REQUEST_METHOD'];
         // Process only when method is POST
         $speech = "rien";
+        
         if($method == 'POST')
         {
 	        //Récuperation du json
@@ -24,7 +25,7 @@ class HomeController extends AbstractController
             //Récupération d'une variable dans le json
             $action = $json->queryResult->action;
             
-            $speech = manger();
+            $speech = $action;
         }
         
         //$speech = "coucou jerome merci".$action;
@@ -39,7 +40,7 @@ class HomeController extends AbstractController
     }
 
     public function manger() {
-        $speech = "Je mange.";
+        $speech = "Je mange";
         return $speech;
     }
 }
