@@ -24,7 +24,8 @@ class HomeController extends AbstractController
 	        $action = $json->queryResult->action;
         }
 
-        $speech = "coucou jerome merci".$action;
+        $speech = $action();
+        //$speech = "coucou jerome merci".$action;
         //Répondre au Google Home
 	    $response = new \stdClass();
 	    $response->fulfillmentText = $speech;
@@ -33,5 +34,10 @@ class HomeController extends AbstractController
         $home = json_encode($response);
         return new Response($home);
         //return $this->render('home/index.html.twig');
+    }
+
+    public function manger() {
+        $speech = "Je mange."
+        return $speech;
     }
 }
