@@ -24,8 +24,9 @@ class HomeController extends AbstractController
             $json = json_decode($requestBody);
             //Récupération d'une variable dans le json
             $action = $json->queryResult->action;
+            $age = $json->outputContexts->parameters->age.original;
             
-            $speech = $this->$action();
+            $speech = $this->$action($age);
         }
         
         //$speech = "coucou jerome merci".$action;
@@ -39,7 +40,7 @@ class HomeController extends AbstractController
         //return $this->render('home/index.html.twig');
     }
 
-    public function manger() {
-        return "Je mange";
+    public function manger($age) {
+        return "Je mange ". $age;
     }
 }
