@@ -24,7 +24,7 @@ class HomeController extends AbstractController
             $json = json_decode($requestBody);
             //Récupération d'une variable dans le json
             $action = $json->queryResult->action;
-            $age = $json->queryResult->outputContexts->parameters->age;
+            $age = $json->queryResult->outputContexts->parameters[0]->age;
             //$age = "5";
             
             $speech = $this->$action($age);
