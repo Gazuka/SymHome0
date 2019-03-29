@@ -24,7 +24,7 @@ class HomeController extends AbstractController
         $this->fulfillment('test.json');
         //Appel de la fonction demandé
         $this->Speech = $this->fulfillmentTransformAction();
-
+$this->Speech = $method;
         return $this->fulfillmentRepondre();        
     }
 
