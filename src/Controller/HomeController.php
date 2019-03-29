@@ -21,10 +21,10 @@ class HomeController extends AbstractController
         if($method == 'POST'){$fichier = 'php://input';}else{$fichier = 'test.json';}//fichier reel ou fichier fictif pour dev
 
         //Récupération du fichier Json
-        $this->fulfillment('test.json');
+        $this->fulfillment($fichier);
         //Appel de la fonction demandé
         $this->Speech = $this->fulfillmentTransformAction();
-$this->Speech = $method;
+        
         return $this->fulfillmentRepondre();        
     }
 
