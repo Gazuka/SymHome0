@@ -10,7 +10,7 @@ class HomeController extends AbstractController
 {
     private $Json;
     private $Action;
-    private $Speech = "Désolé je ne sais quoi répondre...";
+    private $Speech;
 
     /**
      * @Route("/home", name="home")
@@ -23,14 +23,33 @@ class HomeController extends AbstractController
         //Récupération du fichier Json
         $this->fulfillment($fichier);
         //Appel de la fonction demandé
-        $this->Speech = $this->fulfillmentTransformAction();
-        
-        return $this->fulfillmentRepondre();        
+        //$this->Speech = $this->fulfillmentTransformAction();
+        return $this->fulfillmentTransformAction();
+        //return $this->fulfillmentRepondre();       
     }
-
-    private function manger() {
-        $age = $this->fulfillmentRecupContext('patate', 'age');
-        return "Je mange ". $age;
+    
+    private function fulfillmentTransformAction()
+    {
+        //Tableau de variables à passer dans l'url
+        $variables = ['format' => "home"];
+        
+        //On ajoute des variables selon la page de redirection
+        switch($this->Action)
+        {
+            case 'liste_boites':                
+                //$age = $this->fulfillmentRecupContext('patate', 'age');      
+            break;
+            case 'liste_typealiment':
+                //Affiche la liste des type d'aliment
+            break;
+            default :
+                $this->Action = 'liste_boites'; //Remplacer par page d'erreur    
+                $variables = ['format' => "web"];
+            break;
+        }
+        
+        //On effectue une redirection vers la bonne page avec les variables requises
+        return $this->redirectToRoute($this->Action, $variables);
     }
 
     /**
@@ -46,20 +65,6 @@ class HomeController extends AbstractController
         //Récupération de la variable Action dans le json
         $this->Action = $this->Json->queryResult->action;
     }
-    private function fulfillmentAction()
-    {
-        
-    }
-
-    private function fulfillmentTransformAction()
-    {
-        switch($this->Action)
-        {
-            case 'manger':
-                return $this->manger();
-            break;
-        }
-    }
 
     private function fulfillmentRecupContext($context, $variable)
     {
@@ -74,12 +79,12 @@ class HomeController extends AbstractController
         } 
     }
 
-    private function fulfillmentRepondre()
+    /*private function fulfillmentRepondre()
     {
         //Répondre au Google Home
         $response = new \stdClass();
-        $response->fulfillmentText = $this->Speech;
+        $response->fulfillmentText = htmlentities($this->Speech);
         $home = json_encode($response);
         return new Response($home);
-    }
+    }*/
 }

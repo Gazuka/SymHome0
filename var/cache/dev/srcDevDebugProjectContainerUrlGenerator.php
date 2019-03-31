@@ -21,11 +21,11 @@ class srcDevDebugProjectContainerUrlGenerator extends Symfony\Component\Routing\
         if (null === self::$declaredRoutes) {
             self::$declaredRoutes = [
         'cuisine' => [[], ['_controller' => 'App\\Controller\\CuisineController::index'], [], [['text', '/cuisine']], [], []],
-        'liste_boites' => [[], ['_controller' => 'App\\Controller\\CuisineController::listingBoites'], [], [['text', '/cuisine/boites']], [], []],
-        'new_boite' => [[], ['_controller' => 'App\\Controller\\CuisineController::creerBoite'], [], [['text', '/cuisine/boite/new']], [], []],
+        'liste_boites' => [['format'], ['format' => 'web', '_controller' => 'App\\Controller\\CuisineController::listingBoites'], [], [['text', '/cuisine/boites'], ['variable', '/', '[^/]++', 'format']], [], []],
+        'new_boite' => [['format'], ['format' => 'web', '_controller' => 'App\\Controller\\CuisineController::creerBoite'], [], [['text', '/cuisine/boite/new'], ['variable', '/', '[^/]++', 'format']], [], []],
         'remplir_boite' => [['id'], ['_controller' => 'App\\Controller\\CuisineController::remplirBoite'], [], [['variable', '/', '[^/]++', 'id'], ['text', '/cuisine/boite/add']], [], []],
-        'new_typealiment' => [[], ['_controller' => 'App\\Controller\\CuisineController::creerTypeAliment'], [], [['text', '/cuisine/typealiment/new']], [], []],
-        'liste_typealiment' => [[], ['_controller' => 'App\\Controller\\CuisineController::listingTypesAliment'], [], [['text', '/cuisine/typealiment']], [], []],
+        'new_typealiment' => [['format'], ['format' => 'web', '_controller' => 'App\\Controller\\CuisineController::creerTypeAliment'], [], [['text', '/cuisine/typealiment/new'], ['variable', '/', '[^/]++', 'format']], [], []],
+        'liste_typealiment' => [['format'], ['format' => 'web', '_controller' => 'App\\Controller\\CuisineController::listingTypesAliment'], [], [['text', '/cuisine/typealiment'], ['variable', '/', '[^/]++', 'format']], [], []],
         'new_aliment' => [[], ['_controller' => 'App\\Controller\\CuisineController::creerAliment'], [], [['text', '/cuisine/aliment/new']], [], []],
         'liste_aliment' => [[], ['_controller' => 'App\\Controller\\CuisineController::listingAliments'], [], [['text', '/cuisine/aliment']], [], []],
         'new_stockage' => [[], ['_controller' => 'App\\Controller\\CuisineController::creerStockage'], [], [['text', '/cuisine/stockage/new']], [], []],

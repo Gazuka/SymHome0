@@ -1,20 +1,24 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>SymHOME - {% block title %}Bonjour !{% endblock %}</title>
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/app.css">
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% include 'block/header.html.twig' %}
-        {% block body %}{% endblock %}
-        {% include 'block/footer.html.twig' %}
+{% if format != "home" %}
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>SymHOME - {% block title %}Bonjour !{% endblock %}</title>
+            <link rel="stylesheet" href="/css/bootstrap.min.css">
+            <link rel="stylesheet" href="/css/app.css">
+            {% block stylesheets %}{% endblock %}
+        </head>
+        <body>
+            {% include 'block/header.html.twig' %}
+            {% block body %}{% endblock %}
+            {% include 'block/footer.html.twig' %}
 
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/popper.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
-        {% block javascripts %}{% endblock %}
-    </body>
-</html>
+            <script src="/js/jquery.min.js"></script>
+            <script src="/js/popper.min.js"></script>
+            <script src="/js/bootstrap.min.js"></script>
+            {% block javascripts %}{% endblock %}
+        </body>
+    </html>
+{% else %}
+    {"fulfillmentText":"{% block home %}{% endblock %}"}
+{% endif %}

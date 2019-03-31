@@ -16,3 +16,13 @@
     </ul>
 
 {% endblock %}
+
+{% block home %}
+
+    Vous avez {{ boites | length }} boites :
+    {% for boite in boites %}
+        {{ boite.nom }} : {{ boite.contenu }}
+    {% endfor %}
+    
+{% endblock %}
+

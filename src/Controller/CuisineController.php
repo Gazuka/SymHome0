@@ -40,28 +40,29 @@ class CuisineController extends AbstractController
     /**
      * Affiche l'ensemble des boites disponibles
      * 
-     * @Route("/cuisine/boites", name="liste_boites")
+     * @Route("/{format}/cuisine/boites", defaults={"format"="web"}, name="liste_boites")
      *
      * @return Response
      */
-    public function listingBoites(BoiteRepository $repo) {
+    public function listingBoites(BoiteRepository $repo, $format) {
 
         $boites = $repo->findAll();
 
         return $this->render('cuisine/boites.html.twig', [
             'titre' => 'Listing des boites',
-            'boites' => $boites
+            'boites' => $boites,
+            'format' => $format
         ]);
     }
 
     /**
      * Création d'une boite vide
      * 
-     * @Route("/cuisine/boite/new", name="new_boite")
+     * @Route("/{format}/cuisine/boite/new",  defaults={"format"="web"}, name="new_boite")
      *
      * @return Response
      */
-    public function creerBoite(Request $request, ObjectManager $manager) {
+    public function creerBoite(Request $request, ObjectManager $manager, $format) {
         $boite = new Boite();
 
         $form = $this->createForm(BoiteType::class, $boite);
@@ -80,7 +81,8 @@ class CuisineController extends AbstractController
         }
 
         return $this->render('cuisine/nouvelleboite.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'format' => $format
         ]);
     }
 
@@ -115,7 +117,7 @@ class CuisineController extends AbstractController
     /**
      * Création d'une type d'aliment
      * 
-     * @Route("/cuisine/typealiment/new", name="new_typealiment")
+     * @Route("/{format}/cuisine/typealiment/new", defaults={"format"="web"}, name="new_typealiment")
      *
      * @return Response
      */
@@ -125,23 +127,24 @@ class CuisineController extends AbstractController
         $pagedebase = 'cuisine/nouveauelement.html.twig';
         $pagederesultat = 'liste_typealiment';
         $titre = "Création d'un type d'aliment";
-        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre);
+        return $this->creerElement($format, $element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre);
     }
 
     /**
      * Affiche l'ensemble des types d'aliment
      * 
-     * @Route("/cuisine/typealiment", name="liste_typealiment")
+     * @Route("/{format}/cuisine/typealiment", defaults={"format"="web"}, name="liste_typealiment")
      *
      * @return Response
      */
-    public function listingTypesAliment(TypeAlimentRepository $repo) {
+    public function listingTypesAliment($format, TypeAlimentRepository $repo) {
 
         $typesAliment = $repo->findAll();
 
         return $this->render('cuisine/typealiment.html.twig', [
             'titre' => 'Listing des types d\'aliment',
-            'typesAliment' => $typesAliment
+            'typesAliment' => $typesAliment,
+            'format' => $format
         ]);
     }
 
@@ -290,7 +293,7 @@ class CuisineController extends AbstractController
      * Création d'un formulaire pour un nouveau element (objet entity)
      * @return Response
      */
-    private function creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre){
+    private function creerElement($format, $element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre){
         $form = $this->createForm($class, $element);        
         $form->handleRequest($request);
 
@@ -307,7 +310,8 @@ class CuisineController extends AbstractController
         //Affichage de la page avec le formulaire
         return $this->render($pagedebase, [
             'form' => $form->createView(),
-            'titre' => $titre
+            'titre' => $titre,
+            'format' => $format
         ]);
     }
 }

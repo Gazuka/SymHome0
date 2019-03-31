@@ -3,7 +3,7 @@
   	"queryResult": 
 	{
 		"queryText": "je suis 8",
-    		"action": "manger",
+    		"action": "liste_typealiment",
     		"parameters": 
 		{
 			"age": 8

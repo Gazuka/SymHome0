@@ -16,3 +16,12 @@
     </ul>
 
 {% endblock %}
+
+{% block home %}
+
+    Vous avez {{ typesAliment | length }} types d'aliment :
+    {% for typeAliment in typesAliment %}
+        {{ typeAliment.nom }}, 
+    {% endfor %}
+    
+{% endblock %}
