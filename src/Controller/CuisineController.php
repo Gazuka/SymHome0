@@ -170,10 +170,9 @@ class CuisineController extends AbstractController
     public function listingTypesAliment(TypeAlimentRepository $repo) {
 
         $typesAliment = $repo->findAll();
-        return $this->render('cuisine/typealiment.html.twig', [
+        return $this->render('cuisine/typealiment.'.$this->format.'.twig', [
             'titre' => 'Listing des types d\'aliment',
-            'typesAliment' => $typesAliment,
-            'format' => $this->format
+            'typesAliment' => $typesAliment
         ]);
     }
 
