@@ -46,8 +46,7 @@ class CuisineController extends AbstractController
     public function home(Fulfillment $fulfillment, ObjectManager $manager)
     {
         $this->format = "json";
-        //$fulfillment->index();
-        $fulfillment->Action = "liste_boites"; // Test de rapidité
+        $fulfillment->index();
         //On ajoute des variables selon la page de redirection
         switch($fulfillment->Action)
         {
