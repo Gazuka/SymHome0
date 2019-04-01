@@ -67,6 +67,7 @@ class srcDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
                 $routes = [
                     '/cuisine' => [['_route' => 'cuisine', '_controller' => 'App\\Controller\\CuisineController::index'], null, null, null, false],
                     '/cuisine/home' => [['_route' => 'cuisine_home', '_controller' => 'App\\Controller\\CuisineController::home'], null, null, null, false],
+                    '/cuisine/boites' => [['_route' => 'liste_boites', '_controller' => 'App\\Controller\\CuisineController::listingBoites'], null, null, null, false],
                     '/cuisine/boite/new' => [['_route' => 'new_boite', '_controller' => 'App\\Controller\\CuisineController::creerBoite'], null, null, null, false],
                     '/cuisine/typealiment/new' => [['_route' => 'new_typealiment', '_controller' => 'App\\Controller\\CuisineController::creerTypeAliment'], null, null, null, false],
                     '/cuisine/typealiment' => [['_route' => 'liste_typealiment', '_controller' => 'App\\Controller\\CuisineController::listingTypesAliment'], null, null, null, false],
@@ -114,21 +115,20 @@ class srcDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
         $matchedPathinfo = $pathinfo;
         $regexList = [
             0 => '{^(?'
-                    .'|/([^/]++)/cuisine/boites(*:31)'
-                    .'|/cuisine/boite/add/([^/]++)(*:65)'
+                    .'|/cuisine/boite/add/([^/]++)(*:34)'
                     .'|/_(?'
-                        .'|error/(\\d+)(?:\\.([^/]++))?(*:103)'
-                        .'|wdt/([^/]++)(*:123)'
+                        .'|error/(\\d+)(?:\\.([^/]++))?(*:72)'
+                        .'|wdt/([^/]++)(*:91)'
                         .'|profiler/([^/]++)(?'
                             .'|/(?'
-                                .'|search/results(*:169)'
-                                .'|router(*:183)'
+                                .'|search/results(*:136)'
+                                .'|router(*:150)'
                                 .'|exception(?'
-                                    .'|(*:203)'
-                                    .'|\\.css(*:216)'
+                                    .'|(*:170)'
+                                    .'|\\.css(*:183)'
                                 .')'
                             .')'
-                            .'|(*:226)'
+                            .'|(*:193)'
                         .')'
                     .')'
                 .')/?$}sD',
@@ -139,15 +139,14 @@ class srcDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
                 switch ($m = (int) $matches['MARK']) {
                     default:
                         $routes = [
-                            31 => [['_route' => 'liste_boites', 'format' => 'web', '_controller' => 'App\\Controller\\CuisineController::listingBoites'], ['format'], null, null, false, false],
-                            65 => [['_route' => 'remplir_boite', '_controller' => 'App\\Controller\\CuisineController::remplirBoite'], ['id'], null, null, false, true],
-                            103 => [['_route' => '_twig_error_test', '_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'], ['code', '_format'], null, null, false, true],
-                            123 => [['_route' => '_wdt', '_controller' => 'web_profiler.controller.profiler::toolbarAction'], ['token'], null, null, false, true],
-                            169 => [['_route' => '_profiler_search_results', '_controller' => 'web_profiler.controller.profiler::searchResultsAction'], ['token'], null, null, false, false],
-                            183 => [['_route' => '_profiler_router', '_controller' => 'web_profiler.controller.router::panelAction'], ['token'], null, null, false, false],
-                            203 => [['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception::showAction'], ['token'], null, null, false, false],
-                            216 => [['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception::cssAction'], ['token'], null, null, false, false],
-                            226 => [['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true],
+                            34 => [['_route' => 'remplir_boite', '_controller' => 'App\\Controller\\CuisineController::remplirBoite'], ['id'], null, null, false, true],
+                            72 => [['_route' => '_twig_error_test', '_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'], ['code', '_format'], null, null, false, true],
+                            91 => [['_route' => '_wdt', '_controller' => 'web_profiler.controller.profiler::toolbarAction'], ['token'], null, null, false, true],
+                            136 => [['_route' => '_profiler_search_results', '_controller' => 'web_profiler.controller.profiler::searchResultsAction'], ['token'], null, null, false, false],
+                            150 => [['_route' => '_profiler_router', '_controller' => 'web_profiler.controller.router::panelAction'], ['token'], null, null, false, false],
+                            170 => [['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception::showAction'], ['token'], null, null, false, false],
+                            183 => [['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception::cssAction'], ['token'], null, null, false, false],
+                            193 => [['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true],
                         ];
 
                         list($ret, $vars, $requiredMethods, $requiredSchemes, $hasTrailingSlash, $hasTrailingVar) = $routes[$m];
@@ -184,7 +183,7 @@ class srcDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
                         return $ret;
                 }
 
-                if (226 === $m) {
+                if (193 === $m) {
                     break;
                 }
                 $regex = substr_replace($regex, 'F', $m - $offset, 1 + strlen($m));

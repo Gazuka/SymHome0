@@ -22,7 +22,7 @@ class srcDevDebugProjectContainerUrlGenerator extends Symfony\Component\Routing\
             self::$declaredRoutes = [
         'cuisine' => [[], ['_controller' => 'App\\Controller\\CuisineController::index'], [], [['text', '/cuisine']], [], []],
         'cuisine_home' => [[], ['_controller' => 'App\\Controller\\CuisineController::home'], [], [['text', '/cuisine/home']], [], []],
-        'liste_boites' => [['format'], ['format' => 'web', '_controller' => 'App\\Controller\\CuisineController::listingBoites'], [], [['text', '/cuisine/boites'], ['variable', '/', '[^/]++', 'format']], [], []],
+        'liste_boites' => [[], ['_controller' => 'App\\Controller\\CuisineController::listingBoites'], [], [['text', '/cuisine/boites']], [], []],
         'new_boite' => [[], ['_controller' => 'App\\Controller\\CuisineController::creerBoite'], [], [['text', '/cuisine/boite/new']], [], []],
         'remplir_boite' => [['id'], ['_controller' => 'App\\Controller\\CuisineController::remplirBoite'], [], [['variable', '/', '[^/]++', 'id'], ['text', '/cuisine/boite/add']], [], []],
         'new_typealiment' => [[], ['_controller' => 'App\\Controller\\CuisineController::creerTypeAliment'], [], [['text', '/cuisine/typealiment/new']], [], []],

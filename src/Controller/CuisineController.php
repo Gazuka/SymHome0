@@ -28,7 +28,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CuisineController extends AbstractController
 {
-    //private $format="web";
+    private $format="html";
 
     /**
      * @Route("/cuisine", name="cuisine")
@@ -45,7 +45,7 @@ class CuisineController extends AbstractController
      */
     public function home(Fulfillment $fulfillment, ObjectManager $manager)
     {
-        $this->format = "home";
+        $this->format = "json";
         $fulfillment->index();
         //On ajoute des variables selon la page de redirection
         switch($fulfillment->Action)
@@ -78,7 +78,7 @@ class CuisineController extends AbstractController
 
         $boites = $repo->findAll();
 
-        return $this->render('cuisine/boites.html.twig', [
+        return $this->render('cuisine/boites.'.$this->format.'.twig', [
             'titre' => 'Listing des boites',
             'boites' => $boites,
             'format' => $this->format
