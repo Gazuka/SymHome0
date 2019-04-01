@@ -35,3 +35,8 @@
 
 # Composer PHAR
 /composer.phar
+
+# env
+/.env
+/.env2
+/.env.test
