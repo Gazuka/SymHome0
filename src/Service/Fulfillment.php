@@ -52,4 +52,13 @@ class Fulfillment {
         } 
     }
   
+    /**
+     * On récupére une variable parametre de Dialogflow
+     *
+     * @return void
+     */
+    private function fulfillmentRecupParam($variable)
+    {
+        return $this->Json->queryResult->parameters->$variable;
+    }
 }

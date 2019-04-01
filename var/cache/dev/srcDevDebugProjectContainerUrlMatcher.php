@@ -78,7 +78,6 @@ class srcDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
                     '/cuisine/produit/new' => [['_route' => 'new_produit', '_controller' => 'App\\Controller\\CuisineController::creerProduit'], null, null, null, false],
                     '/cuisine/produit' => [['_route' => 'liste_produit', '_controller' => 'App\\Controller\\CuisineController::listingProduit'], null, null, null, false],
                     '/cuisine/recette/new' => [['_route' => 'new_recette', '_controller' => 'App\\Controller\\CuisineController::creerRecette'], null, null, null, false],
-                    '/home2' => [['_route' => 'home', '_controller' => 'App\\Controller\\HomeController::index'], null, null, null, false],
                     '/_profiler' => [['_route' => '_profiler_home', '_controller' => 'web_profiler.controller.profiler::homeAction'], null, null, null, true],
                     '/_profiler/search' => [['_route' => '_profiler_search', '_controller' => 'web_profiler.controller.profiler::searchAction'], null, null, null, false],
                     '/_profiler/search_bar' => [['_route' => '_profiler_search_bar', '_controller' => 'web_profiler.controller.profiler::searchBarAction'], null, null, null, false],

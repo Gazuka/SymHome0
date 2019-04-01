@@ -34,7 +34,6 @@ class srcDevDebugProjectContainerUrlGenerator extends Symfony\Component\Routing\
         'new_produit' => [[], ['_controller' => 'App\\Controller\\CuisineController::creerProduit'], [], [['text', '/cuisine/produit/new']], [], []],
         'liste_produit' => [[], ['_controller' => 'App\\Controller\\CuisineController::listingProduit'], [], [['text', '/cuisine/produit']], [], []],
         'new_recette' => [[], ['_controller' => 'App\\Controller\\CuisineController::creerRecette'], [], [['text', '/cuisine/recette/new']], [], []],
-        'home' => [[], ['_controller' => 'App\\Controller\\HomeController::index'], [], [['text', '/home2']], [], []],
         '_twig_error_test' => [['code', '_format'], ['_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format'], ['variable', '/', '\\d+', 'code'], ['text', '/_error']], [], []],
         '_wdt' => [['token'], ['_controller' => 'web_profiler.controller.profiler::toolbarAction'], [], [['variable', '/', '[^/]++', 'token'], ['text', '/_wdt']], [], []],
         '_profiler_home' => [[], ['_controller' => 'web_profiler.controller.profiler::homeAction'], [], [['text', '/_profiler/']], [], []],

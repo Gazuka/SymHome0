@@ -60,6 +60,16 @@ class CuisineController extends AbstractController
                 $repo = $manager->getRepository(TypeAliment::class);
                 return $this->listingTypesAliment($repo);
             break;
+            case 'new_typealiment';
+                $nom = $this->fulfillmentRecupParam('nom');
+                $typealiment = new TypeAliment();
+                $typealiment->setNom($nom);
+                $manager->persist($typealiment);
+                $manager->flush();
+                return $this->render('cuisine/newtypealiment.'.$this->format.'.twig', [
+                    'nom' => $nom
+                ]);
+            break;
             default :
                 $this->format = "html";
                 return $this->index();
@@ -80,8 +90,7 @@ class CuisineController extends AbstractController
 
         return $this->render('cuisine/boites.'.$this->format.'.twig', [
             'titre' => 'Listing des boites',
-            'boites' => $boites,
-            'format' => $this->format
+            'boites' => $boites
         ]);
     }
 

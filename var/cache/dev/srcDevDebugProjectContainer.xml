@@ -396,13 +396,6 @@
         <argument type="service" id=".service_locator.ychIlgF.App\Controller\CuisineController"/>
       </call>
     </service>
-    <service id="App\Controller\HomeController" class="App\Controller\HomeController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.ychIlgF.App\Controller\HomeController"/>
-      </call>
-    </service>
     <service id="App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" public="false" autowire="true" autoconfigure="true">
       <tag name="doctrine.fixture.orm"/>
     </service>
@@ -4302,9 +4295,6 @@
     <service id=".instanceof.Symfony\Component\DependencyInjection\ServiceSubscriberInterface.0.App\Controller\CuisineController" class="App\Controller\CuisineController" public="false" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\CuisineController" class="App\Controller\CuisineController" public="false" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\CuisineController" class="App\Controller\CuisineController" public="false" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Component\DependencyInjection\ServiceSubscriberInterface.0.App\Controller\HomeController" class="App\Controller\HomeController" public="false" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\HomeController" class="App\Controller\HomeController" public="false" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\HomeController" class="App\Controller\HomeController" public="false" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" public="false" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" public="false" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\CuisineFixtures" class="App\DataFixtures\CuisineFixtures" public="false" autowire="true" abstract="true"/>
@@ -4819,11 +4809,6 @@
     </service>
     <service id=".service_locator.ychIlgF.App\Controller\CuisineController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <argument>App\Controller\CuisineController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.ychIlgF" method="withContext"/>
-    </service>
-    <service id=".service_locator.ychIlgF.App\Controller\HomeController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
-      <argument>App\Controller\HomeController</argument>
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.ychIlgF" method="withContext"/>
     </service>
