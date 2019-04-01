@@ -51,7 +51,7 @@ class CuisineController extends AbstractController
         switch($fulfillment->Action)
         {
             case 'liste_boites':                
-                //$age = $this->fulfillmentRecupContext('patate', 'age');
+                //$age = $fulfillment->fulfillmentRecupContext('patate', 'age');
                 $repo = $manager->getRepository(Boite::class);
                 return $this->listingBoites($repo);
             break;
@@ -61,7 +61,7 @@ class CuisineController extends AbstractController
                 return $this->listingTypesAliment($repo);
             break;
             case 'new_typealiment';
-                $nom = $this->fulfillmentRecupParam('nom');
+                $nom = $fulfillment->fulfillmentRecupParam('nom');
                 $typealiment = new TypeAliment();
                 $typealiment->setNom($nom);
                 $manager->persist($typealiment);
