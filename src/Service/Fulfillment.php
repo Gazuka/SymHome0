@@ -39,7 +39,7 @@ class Fulfillment {
      *
      * @return void
      */
-    private function fulfillmentRecupContext($context, $variable)
+    public function fulfillmentRecupContext($context, $variable)
     {
         foreach($this->Json->queryResult->outputContexts as $param)   
         {
@@ -57,7 +57,7 @@ class Fulfillment {
      *
      * @return void
      */
-    private function fulfillmentRecupParam($variable)
+    public function fulfillmentRecupParam($variable)
     {
         return $this->Json->queryResult->parameters->$variable;
     }
