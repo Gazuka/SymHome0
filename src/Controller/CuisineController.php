@@ -321,7 +321,7 @@ class CuisineController extends AbstractController
      * Création d'un formulaire pour un nouveau element (objet entity)
      * @return Response
      */
-    private function creerElement($format, $element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre){
+    private function creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre){
         $form = $this->createForm($class, $element);        
         $form->handleRequest($request);
 
@@ -338,8 +338,7 @@ class CuisineController extends AbstractController
         //Affichage de la page avec le formulaire
         return $this->render($pagedebase, [
             'form' => $form->createView(),
-            'titre' => $titre,
-            'format' => $format
+            'titre' => $titre
         ]);
     }
 }
