@@ -61,8 +61,8 @@ class CuisineController extends AbstractController
                 return $this->listingTypesAliment($repo);
             break;
             default :
-                $this->Action = 'liste_boites'; //Remplacer par page d'erreur    
-                $variables = ['format' => "web"];
+                $this->format = "html";
+                return $this->index();
             break;
         }
     }
