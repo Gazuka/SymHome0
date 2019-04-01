@@ -52,7 +52,8 @@ class CuisineController extends AbstractController
         {
             case 'liste_boites':                
                 //$age = $this->fulfillmentRecupContext('patate', 'age');
-                //$this->listingBoites($repo, $this->format);
+                $repo = $manager->getRepository(Boite::class);
+                return $this->listingBoites($repo);
             break;
             case 'liste_typealiment':
                 //Affiche la liste des type d'aliment
@@ -69,18 +70,18 @@ class CuisineController extends AbstractController
     /**
      * Affiche l'ensemble des boites disponibles
      * 
-     * @Route("/{format}/cuisine/boites", defaults={"format"="web"}, name="liste_boites")
+     * @Route("cuisine/boites", name="liste_boites")
      *
      * @return Response
      */
-    public function listingBoites(BoiteRepository $repo, $format) {
+    public function listingBoites(BoiteRepository $repo) {
 
         $boites = $repo->findAll();
 
         return $this->render('cuisine/boites.html.twig', [
             'titre' => 'Listing des boites',
             'boites' => $boites,
-            'format' => $format
+            'format' => $this->format
         ]);
     }
 
