@@ -13,7 +13,7 @@ class HomeController extends AbstractController
     private $Speech;
 
     /**
-     * @Route("/home", name="home")
+     * @Route("/home2", name="home")
      */
     public function index()
     {
@@ -37,7 +37,7 @@ class HomeController extends AbstractController
         switch($this->Action)
         {
             case 'liste_boites':                
-                //$age = $this->fulfillmentRecupContext('patate', 'age');      
+                //$age = $this->fulfillmentRecupContext('patate', 'age');
             break;
             case 'liste_typealiment':
                 //Affiche la liste des type d'aliment

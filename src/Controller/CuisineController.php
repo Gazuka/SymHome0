@@ -13,6 +13,7 @@ use App\Form\ProduitType;
 use App\Form\RecetteType;
 use App\Form\StockageType;
 use App\Entity\TypeAliment;
+use App\Service\Fulfillment;
 use App\Form\TypeAlimentType;
 use App\Repository\BoiteRepository;
 use App\Repository\AlimentRepository;
@@ -27,6 +28,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CuisineController extends AbstractController
 {
+    //private $format="web";
+
     /**
      * @Route("/cuisine", name="cuisine")
      */
@@ -35,6 +38,32 @@ class CuisineController extends AbstractController
         return $this->render('cuisine/index.html.twig', [
             'controller_name' => 'CuisineController',
         ]);
+    }
+
+    /**
+     * @Route("/cuisine/home", name="cuisine_home")
+     */
+    public function home(Fulfillment $fulfillment, ObjectManager $manager)
+    {
+        $this->format = "home";
+        $fulfillment->index();
+        //On ajoute des variables selon la page de redirection
+        switch($fulfillment->Action)
+        {
+            case 'liste_boites':                
+                //$age = $this->fulfillmentRecupContext('patate', 'age');
+                //$this->listingBoites($repo, $this->format);
+            break;
+            case 'liste_typealiment':
+                //Affiche la liste des type d'aliment
+                $repo = $manager->getRepository(TypeAliment::class);
+                return $this->listingTypesAliment($repo);
+            break;
+            default :
+                $this->Action = 'liste_boites'; //Remplacer par page d'erreur    
+                $variables = ['format' => "web"];
+            break;
+        }
     }
 
     /**
@@ -58,11 +87,11 @@ class CuisineController extends AbstractController
     /**
      * Création d'une boite vide
      * 
-     * @Route("/{format}/cuisine/boite/new",  defaults={"format"="web"}, name="new_boite")
+     * @Route("/cuisine/boite/new", name="new_boite")
      *
      * @return Response
      */
-    public function creerBoite(Request $request, ObjectManager $manager, $format) {
+    public function creerBoite(Request $request, ObjectManager $manager) {
         $boite = new Boite();
 
         $form = $this->createForm(BoiteType::class, $boite);
@@ -82,7 +111,7 @@ class CuisineController extends AbstractController
 
         return $this->render('cuisine/nouvelleboite.html.twig', [
             'form' => $form->createView(),
-            'format' => $format
+            'format' => $this->format
         ]);
     }
 
@@ -117,7 +146,7 @@ class CuisineController extends AbstractController
     /**
      * Création d'une type d'aliment
      * 
-     * @Route("/{format}/cuisine/typealiment/new", defaults={"format"="web"}, name="new_typealiment")
+     * @Route("/cuisine/typealiment/new", name="new_typealiment")
      *
      * @return Response
      */
@@ -127,24 +156,23 @@ class CuisineController extends AbstractController
         $pagedebase = 'cuisine/nouveauelement.html.twig';
         $pagederesultat = 'liste_typealiment';
         $titre = "Création d'un type d'aliment";
-        return $this->creerElement($format, $element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre);
+        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre);
     }
 
     /**
      * Affiche l'ensemble des types d'aliment
      * 
-     * @Route("/{format}/cuisine/typealiment", defaults={"format"="web"}, name="liste_typealiment")
+     * @Route("/cuisine/typealiment", name="liste_typealiment")
      *
      * @return Response
      */
-    public function listingTypesAliment($format, TypeAlimentRepository $repo) {
+    public function listingTypesAliment(TypeAlimentRepository $repo) {
 
         $typesAliment = $repo->findAll();
-
         return $this->render('cuisine/typealiment.html.twig', [
             'titre' => 'Listing des types d\'aliment',
             'typesAliment' => $typesAliment,
-            'format' => $format
+            'format' => $this->format
         ]);
     }
 
