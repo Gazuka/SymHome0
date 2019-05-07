@@ -138,4 +138,45 @@ class Recette
 
         return $this;
     }
+
+    public function afficheEtape($num)
+    {        
+        return $this->detailEtape($this->etapes[0]->getDescriptif());
+    }
+
+    private function detailEtape($descriptif)
+    {
+        $sortie = "";
+        $matches = explode("[#", $descriptif);
+        foreach($matches as $matche)
+        {
+            if(substr_count($matche, "#]")!=0)
+            {
+                //On coupe la chaine
+                $mat = explode("#]", $matche);
+                //On modifie la variable
+                $var = explode("|", $mat[0]);
+                $pourcentage = rtrim($var[0],"%");
+                $alim = $var[1];
+                foreach($this->ingredients as $ingredient)
+                {
+                    if(strtolower($ingredient->getAliment()->getNom()) == strtolower($alim))
+                    {
+                        $valeur = $ingredient->getQuantite()*$pourcentage/100;
+                        $valeur .= $ingredient->getAliment()->getUniteDefault();                        
+                    }
+                }
+                $sortie .= $valeur." ".$alim;
+                //On garde la fin de chaine
+                $sortie .= $mat[1];
+            }
+            else
+            {
+                //On garde la chaine
+                $sortie .= $matche;
+            }
+        }
+        return $sortie;
+    }
 }
+

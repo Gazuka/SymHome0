@@ -13,7 +13,7 @@ class CuisineFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         //Type d'aliments de base
-        $tabTypeAliment['matière grasse'][]='test';
+        $tabTypeAliment['matière grasse'][]='beurre';
         $tabTypeAliment['boisson'][] = 'eau';
         $tabTypeAliment['boisson'][] = 'coca';
         $tabTypeAliment['sucre'][] = 'sucre';

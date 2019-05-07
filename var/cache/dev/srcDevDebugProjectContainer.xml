@@ -396,6 +396,13 @@
         <argument type="service" id=".service_locator.ychIlgF.App\Controller\CuisineController"/>
       </call>
     </service>
+    <service id="App\Controller\HomeController" class="App\Controller\HomeController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.ychIlgF.App\Controller\HomeController"/>
+      </call>
+    </service>
     <service id="App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" public="false" autowire="true" autoconfigure="true">
       <tag name="doctrine.fixture.orm"/>
     </service>
@@ -424,6 +431,9 @@
       <tag name="form.type"/>
     </service>
     <service id="App\Form\TypeAlimentType" class="App\Form\TypeAlimentType" public="false" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
+    </service>
+    <service id="App\Form\UniteType" class="App\Form\UniteType" public="false" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
     <service id="App\Repository\AlimentRepository" class="App\Repository\AlimentRepository" public="false" autowire="true" autoconfigure="true">
@@ -459,6 +469,10 @@
       <argument type="service" id="doctrine"/>
     </service>
     <service id="App\Repository\TypeAlimentRepository" class="App\Repository\TypeAlimentRepository" public="false" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="App\Repository\UniteRepository" class="App\Repository\UniteRepository" public="false" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
@@ -715,6 +729,7 @@
         <argument>App\Form\RecetteType</argument>
         <argument>App\Form\StockageType</argument>
         <argument>App\Form\TypeAlimentType</argument>
+        <argument>App\Form\UniteType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\FormType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\ChoiceType</argument>
         <argument>Symfony\Bridge\Doctrine\Form\Type\EntityType</argument>
@@ -942,7 +957,7 @@
       <argument type="service" id="form.resolved_type_factory"/>
     </service>
     <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension" public="false">
-      <argument type="service" id=".service_locator.uRBTyRZ"/>
+      <argument type="service" id=".service_locator.6gCu9sV"/>
       <argument type="collection">
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
           <argument type="service" id="form.type_extension.form.transformation_failure_handling"/>
@@ -2734,7 +2749,7 @@
       <factory class="Doctrine\ORM\EntityManager" method="create"/>
     </service>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory" public="false">
-      <argument type="service" id=".service_locator.TCPuy0L"/>
+      <argument type="service" id=".service_locator.Jdo0.EP"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -4295,6 +4310,9 @@
     <service id=".instanceof.Symfony\Component\DependencyInjection\ServiceSubscriberInterface.0.App\Controller\CuisineController" class="App\Controller\CuisineController" public="false" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\CuisineController" class="App\Controller\CuisineController" public="false" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\CuisineController" class="App\Controller\CuisineController" public="false" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\DependencyInjection\ServiceSubscriberInterface.0.App\Controller\HomeController" class="App\Controller\HomeController" public="false" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\HomeController" class="App\Controller\HomeController" public="false" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\HomeController" class="App\Controller\HomeController" public="false" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" public="false" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" public="false" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\CuisineFixtures" class="App\DataFixtures\CuisineFixtures" public="false" autowire="true" abstract="true"/>
@@ -4315,6 +4333,8 @@
     <service id=".abstract.instanceof.App\Form\StockageType" class="App\Form\StockageType" public="false" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\TypeAlimentType" class="App\Form\TypeAlimentType" public="false" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\TypeAlimentType" class="App\Form\TypeAlimentType" public="false" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\UniteType" class="App\Form\UniteType" public="false" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Form\UniteType" class="App\Form\UniteType" public="false" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\AlimentRepository" class="App\Repository\AlimentRepository" public="false" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\AlimentRepository" class="App\Repository\AlimentRepository" public="false" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\BoiteRepository" class="App\Repository\BoiteRepository" public="false" autowire="true" abstract="true"/>
@@ -4333,6 +4353,8 @@
     <service id=".abstract.instanceof.App\Repository\StockageRepository" class="App\Repository\StockageRepository" public="false" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\TypeAlimentRepository" class="App\Repository\TypeAlimentRepository" public="false" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\TypeAlimentRepository" class="App\Repository\TypeAlimentRepository" public="false" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\UniteRepository" class="App\Repository\UniteRepository" public="false" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\UniteRepository" class="App\Repository\UniteRepository" public="false" autowire="true" autoconfigure="true" abstract="true"/>
     <service id="maker.auto_command.make_auth" class="Symfony\Bundle\MakerBundle\Command\MakerCommand" public="false">
       <tag name="console.command" command="make:auth"/>
       <argument type="service" id="maker.maker.make_authenticator"/>
@@ -4545,7 +4567,13 @@
         <argument key="repo" type="service" id="App\Repository\ProduitRepository"/>
       </argument>
     </service>
-    <service id=".service_locator.FwyEAuD" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.wyY8Aiu" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="repo" type="service" id="App\Repository\RecetteRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.0LOCg1W" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\CuisineController::creerAliment" type="service" id=".service_locator.OLaif_L"/>
@@ -4554,6 +4582,7 @@
         <argument key="App\Controller\CuisineController::creerRecette" type="service" id=".service_locator.OLaif_L"/>
         <argument key="App\Controller\CuisineController::creerStockage" type="service" id=".service_locator.OLaif_L"/>
         <argument key="App\Controller\CuisineController::creerTypeAliment" type="service" id=".service_locator.OLaif_L"/>
+        <argument key="App\Controller\CuisineController::creerUnite" type="service" id=".service_locator.OLaif_L"/>
         <argument key="App\Controller\CuisineController::home" type="service" id=".service_locator.u5SR7JC"/>
         <argument key="App\Controller\CuisineController::listingAliments" type="service" id=".service_locator.QNjy4qW"/>
         <argument key="App\Controller\CuisineController::listingBoites" type="service" id=".service_locator.D.JiliE"/>
@@ -4561,12 +4590,14 @@
         <argument key="App\Controller\CuisineController::listingStockage" type="service" id=".service_locator.qGKb5kz"/>
         <argument key="App\Controller\CuisineController::listingTypesAliment" type="service" id=".service_locator.W9fDenB"/>
         <argument key="App\Controller\CuisineController::remplirBoite" type="service" id=".service_locator.gY3.SUg"/>
+        <argument key="App\Controller\CuisineController::test" type="service" id=".service_locator.wyY8Aiu"/>
         <argument key="App\Controller\CuisineController:creerAliment" type="service" id=".service_locator.OLaif_L"/>
         <argument key="App\Controller\CuisineController:creerBoite" type="service" id=".service_locator.OLaif_L"/>
         <argument key="App\Controller\CuisineController:creerProduit" type="service" id=".service_locator.OLaif_L"/>
         <argument key="App\Controller\CuisineController:creerRecette" type="service" id=".service_locator.OLaif_L"/>
         <argument key="App\Controller\CuisineController:creerStockage" type="service" id=".service_locator.OLaif_L"/>
         <argument key="App\Controller\CuisineController:creerTypeAliment" type="service" id=".service_locator.OLaif_L"/>
+        <argument key="App\Controller\CuisineController:creerUnite" type="service" id=".service_locator.OLaif_L"/>
         <argument key="App\Controller\CuisineController:home" type="service" id=".service_locator.u5SR7JC"/>
         <argument key="App\Controller\CuisineController:listingAliments" type="service" id=".service_locator.QNjy4qW"/>
         <argument key="App\Controller\CuisineController:listingBoites" type="service" id=".service_locator.D.JiliE"/>
@@ -4574,6 +4605,7 @@
         <argument key="App\Controller\CuisineController:listingStockage" type="service" id=".service_locator.qGKb5kz"/>
         <argument key="App\Controller\CuisineController:listingTypesAliment" type="service" id=".service_locator.W9fDenB"/>
         <argument key="App\Controller\CuisineController:remplirBoite" type="service" id=".service_locator.gY3.SUg"/>
+        <argument key="App\Controller\CuisineController:test" type="service" id=".service_locator.wyY8Aiu"/>
       </argument>
     </service>
     <service id=".service_locator.yQVjGlt" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
@@ -4633,7 +4665,7 @@
       <argument type="service" id="debug.argument_resolver.variadic.inner"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.uRBTyRZ" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.6gCu9sV" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Form\AlimentType" type="service" id="App\Form\AlimentType"/>
@@ -4644,12 +4676,13 @@
         <argument key="App\Form\RecetteType" type="service" id="App\Form\RecetteType"/>
         <argument key="App\Form\StockageType" type="service" id="App\Form\StockageType"/>
         <argument key="App\Form\TypeAlimentType" type="service" id="App\Form\TypeAlimentType"/>
+        <argument key="App\Form\UniteType" type="service" id="App\Form\UniteType"/>
         <argument key="Symfony\Bridge\Doctrine\Form\Type\EntityType" type="service" id="form.type.entity"/>
         <argument key="Symfony\Component\Form\Extension\Core\Type\ChoiceType" type="service" id="form.type.choice"/>
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="service" id="form.type.form"/>
       </argument>
     </service>
-    <service id=".service_locator.TCPuy0L" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.Jdo0.EP" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Repository\AlimentRepository" type="service" id="App\Repository\AlimentRepository"/>
@@ -4661,6 +4694,7 @@
         <argument key="App\Repository\RecetteRepository" type="service" id="App\Repository\RecetteRepository"/>
         <argument key="App\Repository\StockageRepository" type="service" id="App\Repository\StockageRepository"/>
         <argument key="App\Repository\TypeAlimentRepository" type="service" id="App\Repository\TypeAlimentRepository"/>
+        <argument key="App\Repository\UniteRepository" type="service" id="App\Repository\UniteRepository"/>
       </argument>
     </service>
     <service id="security.logout.handler.csrf_token_clearing" class="Symfony\Component\Security\Http\Logout\CsrfTokenClearingLogoutHandler" public="false">
@@ -4812,6 +4846,11 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.ychIlgF" method="withContext"/>
     </service>
+    <service id=".service_locator.ychIlgF.App\Controller\HomeController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <argument>App\Controller\HomeController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.ychIlgF" method="withContext"/>
+    </service>
     <service id=".service_locator.3nNxzEJ" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -4899,7 +4938,7 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.FwyEAuD"/>
+      <argument type="service" id=".service_locator.0LOCg1W"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
@@ -5234,7 +5273,7 @@
     <service id="Twig\Environment" alias="twig" public="false"/>
     <service id="logger" alias="monolog.logger"/>
     <service id="Psr\Log\LoggerInterface" alias="monolog.logger" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.FwyEAuD"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.0LOCg1W"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id=".service_locator.AoifO_3" alias=".2_ServiceLocator~9zh3CYf" public="false"/>

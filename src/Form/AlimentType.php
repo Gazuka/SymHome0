@@ -14,6 +14,7 @@ class AlimentType extends AbstractType
         $builder
             ->add('nom')
             ->add('typeAliment')
+            ->add('uniteDefault')
         ;
     }
 

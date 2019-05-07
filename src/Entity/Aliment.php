@@ -39,6 +39,12 @@ class Aliment
      */
     private $ingredients;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Unite")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $uniteDefault;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
@@ -136,6 +142,18 @@ class Aliment
                 $ingredient->setAliment(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUniteDefault(): ?Unite
+    {
+        return $this->uniteDefault;
+    }
+
+    public function setUniteDefault(?Unite $uniteDefault): self
+    {
+        $this->uniteDefault = $uniteDefault;
 
         return $this;
     }

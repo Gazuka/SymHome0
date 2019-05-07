@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Boite;
+use App\Entity\Unite;
 use App\Entity\Aliment;
 use App\Entity\Produit;
 use App\Entity\Recette;
 use App\Form\BoiteType;
+use App\Form\UniteType;
 use App\Entity\Stockage;
 use App\Form\AlimentType;
 use App\Form\ProduitType;
@@ -18,6 +20,7 @@ use App\Form\TypeAlimentType;
 use App\Repository\BoiteRepository;
 use App\Repository\AlimentRepository;
 use App\Repository\ProduitRepository;
+use App\Repository\RecetteRepository;
 use App\Repository\StockageRepository;
 use App\Repository\TypeAlimentRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -348,6 +351,50 @@ class CuisineController extends AbstractController
         return $this->render($pagedebase, [
             'form' => $form->createView(),
             'titre' => $titre
+        ]);
+    }
+
+    /**
+     * Création d'une unité
+     * 
+     * @Route("/cuisine/unite/new", name="new_unite")
+     *
+     * @return Response
+     */
+    public function creerUnite(Request $request, ObjectManager $manager) {
+        $element = new Unite();
+        $class = UniteType::class;
+        $pagedebase = 'cuisine/nouveauelement.html.twig';
+        $pagederesultat = 'liste_stockage';
+        $titre = "Création d'une unité";
+        return $this->creerElement($element, $request, $manager, $class, $pagedebase, $pagederesultat, $titre);
+    }
+
+    /**
+     * Création d'une unité
+     * 
+     * @Route("/cuisine/test", name="test_recette")
+     *
+     * @return Response
+     */
+    public function test(RecetteRepository $repo) {
+
+        $recettes = $repo->findAll();
+        foreach($recettes as $recette)
+        {
+            echo $recette->getNom();
+            echo "</br>";
+            echo $recette->afficheEtape(1);
+
+            /*foreach($recette->getEtapes() as $etape)
+            {
+                echo $etape->getDescriptif();
+
+            }*/
+        }
+
+        return $this->render('cuisine/index.html.twig', [
+            'controller_name' => 'CuisineController',
         ]);
     }
 }
